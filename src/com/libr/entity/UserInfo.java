@@ -8,19 +8,12 @@ public class UserInfo {
 	private String userQuestion;
 	private String userAnswer;
 	private boolean useradmin;
-	
-	//构造函数
-	public UserInfo(Integer userId, String userName, String userPassword, String userQuestion, String userAnswer,
-			boolean useradmin) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.userPassword = userPassword;
-		this.userQuestion = userQuestion;
-		this.userAnswer = userAnswer;
-		this.useradmin = useradmin;
-	}
-	//getter&setter
+	private String userGender;
+	private String userContact;
+	private String userRealname;
+	private String userAddress;
+	private String userEmail;
+	private String userMajor;
 	public Integer getUserId() {
 		return userId;
 	}
@@ -57,13 +50,68 @@ public class UserInfo {
 	public void setUseradmin(boolean useradmin) {
 		this.useradmin = useradmin;
 	}
-	
-	
+	public String getUserGender() {
+		return userGender;
+	}
+	public void setUserGender(String userGender) {
+		this.userGender = userGender;
+	}
+	public String getUserContact() {
+		return userContact;
+	}
+	public void setUserContact(String userContact) {
+		this.userContact = userContact;
+	}
+	public String getUserRealname() {
+		return userRealname;
+	}
+	public void setUserRealname(String userRealname) {
+		this.userRealname = userRealname;
+	}
+	public String getUserAddress() {
+		return userAddress;
+	}
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	public String getUserMajor() {
+		return userMajor;
+	}
+	public void setUserMajor(String userMajor) {
+		this.userMajor = userMajor;
+	}
+	public UserInfo(Integer userId, String userName, String userPassword, String userQuestion, String userAnswer,
+			boolean useradmin, String userGender, String userContact, String userRealname, String userAddress,
+			String userEmail, String userMajor) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.userQuestion = userQuestion;
+		this.userAnswer = userAnswer;
+		this.useradmin = useradmin;
+		this.userGender = userGender;
+		this.userContact = userContact;
+		this.userRealname = userRealname;
+		this.userAddress = userAddress;
+		this.userEmail = userEmail;
+		this.userMajor = userMajor;
+	}
 	@Override
 	public String toString() {
 		return "UserInfo [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
-				+ ", userQuestion=" + userQuestion + ", userAnswer=" + userAnswer + ", useradmin=" + useradmin + "]";
+				+ ", userQuestion=" + userQuestion + ", userAnswer=" + userAnswer + ", useradmin=" + useradmin
+				+ ", userGender=" + userGender + ", userContact=" + userContact + ", userRealname=" + userRealname
+				+ ", userAddress=" + userAddress + ", userEmail=" + userEmail + ", userMajor=" + userMajor + "]";
 	}
+	
+	
 	
 	
 	

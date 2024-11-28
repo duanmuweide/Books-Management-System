@@ -3,41 +3,42 @@ package com.libr.entity;
 import java.time.LocalDate;
 
 //储存书籍信息
-public class Book {
+public class Borrow {
 	private Integer bookId;
-	private String bookName;
+	private Integer useId;
 	private String bookType;
-	private String bookWriterName;
-	private Integer bookNumber;
+	private LocalDate borrowTime;
+	private LocalDate borrowReturnTime;
 	private String bookStatement;
-	private boolean bookPosition;
-	
-	
-	
-	public Book(Integer bookId, String bookName, String bookType, String bookWriterName, Integer bookNumber,
-			String bookStatement, boolean bookPosition, LocalDate bookTime) {
+	private Integer bookNumber;
+	public Borrow(Integer bookId, Integer useId, String bookType, LocalDate borrowTime, LocalDate borrowReturnTime,
+			String bookStatement, Integer bookNumber) {
 		super();
 		this.bookId = bookId;
-		this.bookName = bookName;
+		this.useId = useId;
 		this.bookType = bookType;
-		this.bookWriterName = bookWriterName;
-		this.bookNumber = bookNumber;
+		this.borrowTime = borrowTime;
+		this.borrowReturnTime = borrowReturnTime;
 		this.bookStatement = bookStatement;
-		this.bookPosition = bookPosition;
-		this.bookTime = bookTime;
+		this.bookNumber = bookNumber;
 	}
-	
+	@Override
+	public String toString() {
+		return "Borrow [bookId=" + bookId + ", useId=" + useId + ", bookType=" + bookType + ", borrowTime=" + borrowTime
+				+ ", borrowReturnTime=" + borrowReturnTime + ", bookStatement=" + bookStatement + ", bookNumber="
+				+ bookNumber + "]";
+	}
 	public Integer getBookId() {
 		return bookId;
 	}
 	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
 	}
-	public String getBookName() {
-		return bookName;
+	public Integer getUseId() {
+		return useId;
 	}
-	public void setBookName(String bookName) {
-		this.bookName = bookName;
+	public void setUseId(Integer useId) {
+		this.useId = useId;
 	}
 	public String getBookType() {
 		return bookType;
@@ -45,17 +46,17 @@ public class Book {
 	public void setBookType(String bookType) {
 		this.bookType = bookType;
 	}
-	public String getBookWriterName() {
-		return bookWriterName;
+	public LocalDate getBorrowTime() {
+		return borrowTime;
 	}
-	public void setBookWriterName(String bookWriterName) {
-		this.bookWriterName = bookWriterName;
+	public void setBorrowTime(LocalDate borrowTime) {
+		this.borrowTime = borrowTime;
 	}
-	public Integer getBookNumber() {
-		return bookNumber;
+	public LocalDate getBorrowReturnTime() {
+		return borrowReturnTime;
 	}
-	public void setBookNumber(Integer bookNumber) {
-		this.bookNumber = bookNumber;
+	public void setBorrowReturnTime(LocalDate borrowReturnTime) {
+		this.borrowReturnTime = borrowReturnTime;
 	}
 	public String getBookStatement() {
 		return bookStatement;
@@ -63,27 +64,11 @@ public class Book {
 	public void setBookStatement(String bookStatement) {
 		this.bookStatement = bookStatement;
 	}
-	public boolean isBookPosition() {
-		return bookPosition;
+	public Integer getBookNumber() {
+		return bookNumber;
 	}
-	public void setBookPosition(boolean bookPosition) {
-		this.bookPosition = bookPosition;
+	public void setBookNumber(Integer bookNumber) {
+		this.bookNumber = bookNumber;
 	}
-	public LocalDate getBookTime() {
-		return bookTime;
-	}
-	public void setBookTime(LocalDate bookTime) {
-		this.bookTime = bookTime;
-	}
-	private LocalDate bookTime;
-
-
-
-	@Override
-	public String toString() {
-		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookType=" + bookType + ", bookWriterName="
-				+ bookWriterName + ", bookNumber=" + bookNumber + ", bookStatement=" + bookStatement + ", bookPosition="
-				+ bookPosition + ", bookTime=" + bookTime + "]";
-	} 
 	
 }
