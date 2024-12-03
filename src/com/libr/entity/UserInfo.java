@@ -1,6 +1,5 @@
 package com.libr.entity;
 //储存基础用户信息
-//我先写着实体类了哈
 public class UserInfo {
 	private Integer userId;
 	private String userName;
