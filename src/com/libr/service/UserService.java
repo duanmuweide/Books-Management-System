@@ -21,13 +21,13 @@ public interface UserService {
 	// 通过作者查询书籍信息
 	public void serachBookByWriter(String bookWriterName);
 
-	// 通过书名查询书籍信息
+	// 通过关键字查询书籍信息
 	public void serachBookByBookName(String bookName);
 	
 	//查询借书记录
 	public void serachBorrowRecord();
 	
 	//查询还书记录
-	
 	public void serachReturnRecord();
+	
 }

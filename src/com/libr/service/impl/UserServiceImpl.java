@@ -8,7 +8,7 @@ import com.libr.entity.Book;
 import com.libr.entity.Borrow;
 import com.libr.service.AdminService;
 
-public class AdminServiceImpl implements AdminService {
+public class UserServiceImpl implements AdminService {
 
 	// 用列表模拟数据库
 	private List<Book> books = new ArrayList<>();
@@ -63,6 +63,7 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("Book deleted successfully if existed. ID: " + bookId);
 	}
 
+	
 
 	// 根据ID查询书籍
 	@Override

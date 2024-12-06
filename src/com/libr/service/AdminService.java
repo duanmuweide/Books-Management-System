@@ -21,9 +21,6 @@ public interface AdminService {
 	// 根据ID删除指定的图书
 	public void deleteBook(int bookId);
 
-	// 查询借阅记录和还书记录
-	public void viewBorrowRecords();
-
 	// 根据ID查询书籍
 	public void searchBookById(int bookId);
 
@@ -32,5 +29,13 @@ public interface AdminService {
 
 	// 根据日期搜寻
 	public void searchBookByDate(LocalDate date);
-
+	
+	// 通过id查询借阅记录和还书记录
+	public void viewBorrowRecordsById();
+	
+	// 根据用户id查询用户未还的图书记录
+	public void viewUnreturnedRecordsById();
+	
+	// 根据图书id或名称关键字查询图书的借阅情况，如在馆的数量还有多少，位置等
+	public void viewBookStatement();
 }
