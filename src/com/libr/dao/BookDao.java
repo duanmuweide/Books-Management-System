@@ -1,5 +1,6 @@
 package com.libr.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.libr.entity.Book;
@@ -13,6 +14,10 @@ public interface BookDao extends BaseDao {
 	int deleteById(String id);
 	
 	Book getOneById(String id);
+	
+	List<Book> queryByDate(Date d);
+	
+	List<Book> queryByAuthor(String d);
 	
 	List<Book> getAll();
 	
