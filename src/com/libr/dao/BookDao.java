@@ -5,9 +5,9 @@ import java.util.List;
 import com.libr.entity.Book;
 
 public interface BookDao extends BaseDao {
-
+	//插入
 	int insert(Book p);
-	
+	//更新
 	int update(Book p);
 	
 	int deleteById(String id);
