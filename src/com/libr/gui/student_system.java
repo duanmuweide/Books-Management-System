@@ -47,17 +47,29 @@ public class student_system extends JFrame {
 
 		// 创建功能按钮
 		JButton btnSearchBook = new JButton("查找图书");
+		Font currentFont = btnSearchBook.getFont();
+        Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 25);
+        btnSearchBook.setFont(newFont);
+        
 		JButton btnViewBorrowRecord = new JButton("查看借书记录");
+		currentFont = btnViewBorrowRecord.getFont();
+        newFont = new Font(currentFont.getName(), currentFont.getStyle(), 25);
+        btnViewBorrowRecord.setFont(newFont);
+        
 		JButton btnViewReturnRecord = new JButton("查看还书记录");
-		JButton btnReserveSeat = new JButton("预约座位");
+		currentFont = btnViewReturnRecord.getFont();
+        newFont = new Font(currentFont.getName(), currentFont.getStyle(), 25);
+        btnViewReturnRecord.setFont(newFont);
+		
 		JButton btnChangeInformation = new JButton("修改个人信息");
-		// id 密码 性别 手机号 邮箱
+		currentFont = btnChangeInformation.getFont();
+        newFont = new Font(currentFont.getName(), currentFont.getStyle(), 25);
+        btnChangeInformation.setFont(newFont);
 
 		// 将按钮添加到面板中
 		buttonPanel.add(btnSearchBook);
 		buttonPanel.add(btnViewBorrowRecord);
 		buttonPanel.add(btnViewReturnRecord);
-		buttonPanel.add(btnReserveSeat);
 		buttonPanel.add(btnChangeInformation);
 
 		// 将面板添加到窗口中
@@ -70,6 +82,36 @@ public class student_system extends JFrame {
 				personal_information frame = new personal_information();
 				frame.setVisible(true);
 
+			}
+		});
+		
+		btnSearchBook.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				student_system.this.dispose();
+				find_stu frame = new find_stu();
+				frame.setVisible(true);
+				
+			}
+		});
+		
+		btnViewBorrowRecord.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				student_system.this.dispose();
+				stu_borrowRecord frame = new stu_borrowRecord();
+				frame.setVisible(true);
+				
+			}
+		});
+		
+		btnViewReturnRecord.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				student_system.this.dispose();
+				stu_returnRecord frame = new stu_returnRecord();
+				frame.setVisible(true);
+				
 			}
 		});
 

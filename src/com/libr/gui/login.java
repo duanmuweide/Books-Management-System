@@ -33,7 +33,7 @@ public class login extends JFrame {
 		container.add(label1);
 
 		// 创建下拉框
-		String[] identities = { "学生", "教职工" };
+		String[] identities = { "学生", "管理员" };
 		JComboBox<String> comboBox = new JComboBox<>(identities);
 		comboBox.setBounds(110, 40, 220, 30);
 		container.add(comboBox);
@@ -95,7 +95,7 @@ public class login extends JFrame {
 				char[] chs = pf_pwd.getPassword();
 				// 这里将一个char[]转成一个字符串
 				String pwd = new String(chs);
-
+				
 				// 注意：字符串判断是否相等要用equals()方法
 				if ("anna".equals(id) && "1234".equals(pwd) && selectedIdentity.equals("学生")) {
 					// 显示新窗体的同时，可以将当前窗体关闭
@@ -109,7 +109,7 @@ public class login extends JFrame {
 					student_system frame = new student_system("anna");
 					frame.setVisible(true);
 					System.out.println(selectedIdentity);
-				} else if ("anna".equals(id) && "1234".equals(pwd) && selectedIdentity.equals("教职工")) {
+				} else if ("anna".equals(id) && "1234".equals(pwd) && selectedIdentity.equals("管理员")) {
 					login.this.dispose();
 					manager_system frame = new manager_system();
 					frame.setVisible(true);
@@ -151,3 +151,4 @@ public class login extends JFrame {
 		frame.setVisible(true);
 	}
 }
+
