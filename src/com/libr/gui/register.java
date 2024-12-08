@@ -1,89 +1,83 @@
 package com.libr.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 public class register extends JFrame {
+    public register() {
+        setTitle("注册界面");
+        setSize(300, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-	public register() {
-		this.setSize(400, 300);
-		this.setTitle("注册页面");
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        // 创建输入组件
+        JTextField idField = new JTextField(20);
+        JTextField nameField = new JTextField(20);
+        nameField.setFont(new Font(nameField.getFont().getName(), Font.BOLD, nameField.getFont().getSize()));
+        JPasswordField passwordField = new JPasswordField(20);
+        JTextField realNameField = new JTextField(20);
+        realNameField.setFont(new Font(realNameField.getFont().getName(), Font.BOLD, realNameField.getFont().getSize()));
+        JTextField addressField = new JTextField(20);
+        addressField.setFont(new Font(addressField.getFont().getName(), Font.BOLD, addressField.getFont().getSize()));
+        JTextField emailField = new JTextField(20);
+        JTextField majorField = new JTextField(20);
+        majorField.setFont(new Font(majorField.getFont().getName(), Font.BOLD, majorField.getFont().getSize()));
+        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"男", "女"});
 
-		JPanel container = new JPanel();
-		container.setBackground(Color.white);
+        // 添加组件到界面
+        int y = 0;
+        addLabelAndField("ID:", idField, gbc, y++);
+        addLabelAndField("名称:", nameField, gbc, y++);
+        addLabelAndField("密码:", passwordField, gbc, y++);
+        addLabelAndField("真名:", realNameField, gbc, y++);
+        addLabelAndField("地址:", addressField, gbc, y++);
+        addLabelAndField("邮箱:", emailField, gbc, y++);
+        addLabelAndField("专业:", majorField, gbc, y++);
+        addLabelAndComponent("性别:", genderComboBox, gbc, y++);
 
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        // 添加提交按钮
+        JButton submitButton = new JButton("提交");
+        gbc.gridx = 0;
+        gbc.gridy = y;
+        gbc.gridwidth = 3; // 设置宽度占满整个布局
+        gbc.fill = GridBagConstraints.NONE; // 不填充整个区域
+        gbc.anchor = GridBagConstraints.CENTER; // 居中对齐
+        add(submitButton, gbc);
 
-		// 将大容器添加到窗体上
-		this.add(container);
+        // 设置窗口居中
+        setLocationRelativeTo(null);
+    }
 
-		JPanel id1 = new JPanel();
-		// JPanel作为容器组件，它里面可以添加任何其他组件，包括JPanel
-		JLabel id2 = new JLabel("名称： ");
-		id1.add(id2);
+    private void addLabelAndField(String labelText, JTextField field, GridBagConstraints gbc, int y) {
+        gbc.gridx = 0;
+        gbc.gridy = y;
+        gbc.gridwidth = 1;
+        add(new JLabel(labelText), gbc);
 
-		JTextField id3 = new JTextField(28);
-		id1.add(id3);
+        gbc.gridx = 1;
+        gbc.gridy = y;
+        gbc.gridwidth = 2;
+        add(field, gbc);
+    }
 
-		JPanel pwd1 = new JPanel();
-		JLabel pwd2 = new JLabel("密码： ");
-		pwd1.add(pwd2);
+    private void addLabelAndComponent(String labelText, JComponent component, GridBagConstraints gbc, int y) {
+        gbc.gridx = 0;
+        gbc.gridy = y;
+        gbc.gridwidth = 1;
+        add(new JLabel(labelText), gbc);
 
-		JTextField pwd3 = new JTextField(28);
-		pwd1.add(pwd3);
+        gbc.gridx = 1;
+        gbc.gridy = y;
+        gbc.gridwidth = 2;
+        add(component, gbc);
+    }
 
-		JPanel phone1 = new JPanel();
-		JLabel phone2 = new JLabel("手机号： ");
-		phone1.add(phone2);
-
-		JTextField phone3 = new JTextField(28);
-		phone1.add(phone3);
-
-		JPanel email1 = new JPanel();
-		JLabel email2 = new JLabel("邮箱： ");
-		email1.add(email2);
-
-		JTextField email3 = new JTextField(28);
-		email1.add(email3);
-
-		JPanel gender = new JPanel();
-		JLabel gender1 = new JLabel("性别： ");
-		gender.add(gender1);
-		String[] genders = { "男", "女" };
-		JComboBox<String> gender2 = new JComboBox<>(genders);
-		gender2.setPreferredSize(new Dimension(257, 20));
-		gender.add(gender2);
-
-		JButton submit = new JButton("提交");
-
-		id1.setBackground(Color.white);
-		pwd1.setBackground(Color.white);
-		phone1.setBackground(Color.white);
-		email1.setBackground(Color.white);
-		gender.setBackground(Color.white);
-
-		container.add(id1);
-		container.add(pwd1);
-		container.add(phone1);
-		container.add(email1);
-		container.add(gender);
-		container.add(submit);
-
-	}
-
-	public static void main(String[] args) {
-		register frame = new register();
-		frame.setVisible(true);
-	}
-
+    public static void main(String[] args) {
+       register frame=new register(); 
+       frame.setVisible(true);
+    }
 }
+
