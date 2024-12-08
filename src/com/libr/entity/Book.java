@@ -1,6 +1,6 @@
 package com.libr.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 //储存书籍信息
 public class Book {
@@ -10,12 +10,12 @@ public class Book {
 	private String bookWriterName;
 	private Integer bookNumber;
 	private String bookStatement;
-	private boolean bookPosition;
-	
+	private String bookPosition;
+	private Date bookTime;
 	
 	
 	public Book(Integer bookId, String bookName, String bookType, String bookWriterName, Integer bookNumber,
-			String bookStatement, boolean bookPosition, LocalDate bookTime) {
+			String bookStatement, String bookPosition, Date bookTime) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -63,21 +63,18 @@ public class Book {
 	public void setBookStatement(String bookStatement) {
 		this.bookStatement = bookStatement;
 	}
-	public boolean isBookPosition() {
+	public String getBookPosition() {
 		return bookPosition;
 	}
-	public void setBookPosition(boolean bookPosition) {
+	public void setBookPosition(String bookPosition) {
 		this.bookPosition = bookPosition;
 	}
-	public LocalDate getBookTime() {
+	public Date getBookTime() {
 		return bookTime;
 	}
-	public void setBookTime(LocalDate bookTime) {
+	public void setBookTime(Date bookTime) {
 		this.bookTime = bookTime;
 	}
-	private LocalDate bookTime;
-
-
 
 	@Override
 	public String toString() {
