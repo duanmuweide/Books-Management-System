@@ -214,6 +214,41 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 
 	@Override
+	public List<Book> getOneByBookName(String name)
+	{
+		List<Book> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select * from book where bname=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1,name);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				Book b=new Book(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getInt(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getDate(8)
+					);
+			list.add(b);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return list;
+	}
+	
+
+	@Override
 	public List<Book> getOneByAuthor(String d) {
 		List<Book> list = new ArrayList<>();
 		Connection con = null;
