@@ -23,10 +23,16 @@ public class AdminServiceImpl implements AdminService {
 
 	// 修改管理员密码根据id
 	@Override
-    public void changePassword(String newPassword) {
-        BookDao.getPassword(String passwd){
-        }System.out.println("密码修改成功！");
-
+	public void changePassword(int userId, String newPassword) {
+		UserInfoDaoImpl uidi = new UserInfoDaoImpl();
+		UserInfo userInfo = uidi.getOneById(userId);
+		if (userInfo != null) {
+			userInfo.setUserPassword(newPassword);
+			uidi.update(userInfo);
+			System.out.println("密码修改成功！");
+		} else {
+			System.out.println("用户不存在！");
+		}
 	}
 
 	// 添加管理员

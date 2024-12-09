@@ -26,7 +26,7 @@ public class Book {
 		this.bookPosition = bookPosition;
 		this.bookTime = bookTime;
 	}
-	
+	public Book() {};
 	public int getBookId() {
 		return bookId;
 	}

@@ -7,7 +7,7 @@ import com.libr.entity.Book;
 //AdminService接口： 声明产品相关的业务功能
 public interface AdminService {
 	// 修改密码
-	public void changePassword(String userPassword);
+	public void changePassword(int userId, String newPassword);
 
 	// 添加其他管理员账户
 	public void addAdmin();

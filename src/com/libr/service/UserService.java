@@ -8,7 +8,7 @@ public interface UserService {
 	public void register(UserInfo userInfo);
 
 	// 登录
-	public void loginIn();
+	public void loginIn(int userId, String password);
 
 	// 通过id修改密码
 	public void changePassword(int userId,String userPassword);

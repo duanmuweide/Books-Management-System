@@ -21,6 +21,7 @@ public interface BookDao extends BaseDao {
 	
 	List<Book> getAll();//把所有全列出来
 	
+	List<Book> getOneByBookName(String name);
 	
 	List<Book> getAllByKeyword(String keyword);
 }
