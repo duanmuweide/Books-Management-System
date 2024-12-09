@@ -179,4 +179,27 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 		}
 		return list;
 	}
+	@Override
+	public String getPassword(String id) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String passwd = null; 
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select upwd from user_info where uid=?";
+			ps = con.prepareStatement(sql);
+			ps.setObject(1,id);
+			rs = ps.executeQuery();
+			if (rs.next()) { 
+				passwd = rs.getString(1);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return passwd;
+	}
 }

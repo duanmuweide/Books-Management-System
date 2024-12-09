@@ -22,4 +22,6 @@ public interface BorrowDao extends BaseDao {
 	 * @return 一个满足查询条件的产品列表
 	 */
 	List<Borrow> getAllByKeyword(String keyword);
+
+	List<Borrow> getBorrowByUid(String user_id);
 }
