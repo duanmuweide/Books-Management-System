@@ -4,17 +4,17 @@ import java.util.Date;
 
 //储存书籍信息
 public class Book {
-	private Integer bookId;
+	private int bookId;
 	private String bookName;
 	private String bookType;
 	private String bookWriterName;
-	private Integer bookNumber;
+	private int bookNumber;
 	private String bookStatement;
 	private String bookPosition;
 	private Date bookTime;
 	
 	
-	public Book(Integer bookId, String bookName, String bookType, String bookWriterName, Integer bookNumber,
+	public Book(int bookId, String bookName, String bookType, String bookWriterName, int bookNumber,
 			String bookStatement, String bookPosition, Date bookTime) {
 		super();
 		this.bookId = bookId;
@@ -27,10 +27,10 @@ public class Book {
 		this.bookTime = bookTime;
 	}
 	
-	public Integer getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
-	public void setBookId(Integer bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
 	public String getBookName() {
@@ -51,10 +51,10 @@ public class Book {
 	public void setBookWriterName(String bookWriterName) {
 		this.bookWriterName = bookWriterName;
 	}
-	public Integer getBookNumber() {
+	public int getBookNumber() {
 		return bookNumber;
 	}
-	public void setBookNumber(Integer bookNumber) {
+	public void setBookNumber(int bookNumber) {
 		this.bookNumber = bookNumber;
 	}
 	public String getBookStatement() {

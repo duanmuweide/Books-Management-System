@@ -18,9 +18,6 @@ public interface BorrowDao extends BaseDao {
 	
 	
 	List<Borrow> getAllByKeyword(String keyword);
-<<<<<<< HEAD
 
 	List<Borrow> getBorrowByUid(int user_id);
-=======
->>>>>>> 1e73c4f3e56b3e606a9a17dca969424616b56166
 }

@@ -181,7 +181,6 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 	}
 	@Override
 	public String getPassword(int id) {
-		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

@@ -4,14 +4,14 @@ import java.util.Date;
 
 //储存书籍信息
 public class Borrow {
-	private Integer bookId;
-	private Integer useId;
+	private int bookId;
+	private int useId;
 	private Date borrowTime;
 	private Date borrowReturnTime;
 	private Boolean bookStatement;
-	private Integer bookNumber;
-	public Borrow(Integer useId,Integer bookId, Date borrowTime,
-			Boolean bookStatement, Date borrowReturnTime, Integer bookNumber) {
+	private int bookNumber;
+	public Borrow(int useId,int bookId, Date borrowTime,
+			Boolean bookStatement, Date borrowReturnTime, int bookNumber) {
 		super();
 		this.useId = useId;
 		this.bookId = bookId;
@@ -26,16 +26,16 @@ public class Borrow {
 				+ ", borrowReturnTime=" + borrowReturnTime + ", bookStatement=" + bookStatement + ", bookNumber="
 				+ bookNumber + "]";
 	}
-	public Integer getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
-	public void setBookId(Integer bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
-	public Integer getUseId() {
+	public int getUseId() {
 		return useId;
 	}
-	public void setUseId(Integer useId) {
+	public void setUseId(int useId) {
 		this.useId = useId;
 	}
 	public Date getBorrowTime() {
@@ -56,10 +56,10 @@ public class Borrow {
 	public void setBookStatement(Boolean bookStatement) {
 		this.bookStatement = bookStatement;
 	}
-	public Integer getBookNumber() {
+	public int getBookNumber() {
 		return bookNumber;
 	}
-	public void setBookNumber(Integer bookNumber) {
+	public void setBookNumber(int bookNumber) {
 		this.bookNumber = bookNumber;
 	}
 	

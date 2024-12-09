@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
 
 	// 修改管理员密码根据id
 	@Override
-    public void changePassword(int newPassword) {
+    public void changePassword(String newPassword) {
         BookDao.getPassword(String passwd){
         }System.out.println("密码修改成功！");
 

@@ -1,7 +1,7 @@
 package com.libr.entity;
 //储存基础用户信息
 public class UserInfo {
-	private Integer userId;
+	private int userId;
 	private String userName;
 	private String userPassword;
 	private String userQuestion;
@@ -13,10 +13,10 @@ public class UserInfo {
 	private String userAddress;
 	private String userEmail;
 	private String userMajor;
-	public Integer getUserId() {
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	public String getUserName() {
@@ -85,7 +85,7 @@ public class UserInfo {
 	public void setUserMajor(String userMajor) {
 		this.userMajor = userMajor;
 	}
-	public UserInfo(Integer userId, String userName, String userPassword, String userQuestion, String userAnswer,
+	public UserInfo(int userId, String userName, String userPassword, String userQuestion, String userAnswer,
 			boolean userAdmin, String userGender, String userContact, String userRealname, String userAddress,
 			String userEmail, String userMajor) {
 		super();

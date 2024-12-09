@@ -1,22 +1,20 @@
 package com.libr.service;
 
-import java.time.LocalDate;
-
-import com.libr.entity.Book;
+import com.libr.entity.UserInfo;
 
 //UserService接口： 声明用户相关的业务功能
 public interface UserService {
 	// 注册
-	public void register();
+	public void register(UserInfo userInfo);
 
 	// 登录
 	public void loginIn();
 
-	// 修改密码
-	public void changePassword(int userPassword);
+	// 通过id修改密码
+	public void changePassword(int userId,String userPassword);
 
 	// 修改个人信息
-	public void changeUserInfo(int userPassword);
+	public void changeUserInfo(UserInfo user);
 
 	// 通过作者查询书籍信息
 	public void serachBookByWriter(String bookWriterName);
