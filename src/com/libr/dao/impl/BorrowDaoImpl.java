@@ -176,7 +176,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public List<Borrow> getBorrowByUid(String user_id) {
+	public List<Borrow> getBorrowByUid(int user_id) {
 		// TODO Auto-generated method stub
 		List<Borrow> list = new ArrayList<>();
 		Connection con = null;
