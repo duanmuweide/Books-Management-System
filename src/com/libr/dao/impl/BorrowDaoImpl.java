@@ -174,4 +174,36 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		}
 		return list;
 	}
+
+	@Override
+	public List<Borrow> getBorrowByUid(String user_id) {
+		// TODO Auto-generated method stub
+		List<Borrow> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select * from borrow where uid=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1,user_id);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				Borrow b=new Borrow(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getDate(3),
+						rs.getBoolean(4),
+						rs.getDate(5),
+						rs.getInt(6)
+					);
+			list.add(b);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return list;
+	}
 }
