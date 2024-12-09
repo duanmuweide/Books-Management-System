@@ -15,16 +15,12 @@ public interface BookDao extends BaseDao {
 	
 	Book getOneById(String id);
 	
-	List<Book> queryByDate(Date d);
+	List<Book> getOneByDate(Date day);
 	
-	List<Book> queryByAuthor(String d);
+	List<Book> getOneByAuthor(String name);
 	
-	List<Book> getAll();
+	List<Book> getAll();//把所有全列出来
 	
-	/**
-	 * 根据名称关键字查询产品列表
-	 * @param keyword 检索关键字
-	 * @return 一个满足查询条件的产品列表
-	 */
+	
 	List<Book> getAllByKeyword(String keyword);
 }

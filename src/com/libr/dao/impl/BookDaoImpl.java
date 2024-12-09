@@ -17,7 +17,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public int insert(Book p) {
-		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
 		int rows = 0; // 定义一个变量，存储受影响的行数
@@ -49,7 +48,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public int update(Book p) {
-		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
 		int rows = 0; // 定义一个变量，存储受影响的行数
@@ -76,7 +74,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public int deleteById(String id) {
-		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
 		int rows = 0; // 定义一个变量，存储受影响的行数
@@ -96,7 +93,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public Book getOneById(String id) {
-		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -121,7 +117,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public List<Book> getAll() {
-		// TODO Auto-generated method stub
 		List<Book> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -154,7 +149,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public List<Book> getAllByKeyword(String keyword) {
-		// TODO Auto-generated method stub
 		List<Book> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -187,8 +181,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 
 	@Override
-	public List<Book> queryByDate(Date d) {
-		// TODO Auto-generated method stub
+	public List<Book> getOneByDate(Date d) {
 		List<Book> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -221,8 +214,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 
 	@Override
-	public List<Book> queryByAuthor(String d) {
-		// TODO Auto-generated method stub
+	public List<Book> getOneByAuthor(String d) {
 		List<Book> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
