@@ -80,7 +80,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 	}
 
 	@Override
-	public int deleteById(String id) {
+	public int deleteById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -89,7 +89,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 			con = DatabaseUtil.getConnection();
 			String sql = "delete from user_info where uid=?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1,id);
+			ps.setInt(1,id);
 			rows = ps.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -100,7 +100,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 	}
 
 	@Override
-	public UserInfo getOneById(String id) {
+	public UserInfo getOneById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -110,7 +110,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 			con = DatabaseUtil.getConnection();
 			String sql = "select * from user_info where uid=?";
 			ps = con.prepareStatement(sql);
-			ps.setObject(1,id);
+			ps.setInt(1,id);
 			rs = ps.executeQuery();
 			if (rs.next()) { 
 				user_info = new UserInfo(rs.getInt(1),rs.getString(2),rs.getString(3),
@@ -180,7 +180,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 		return list;
 	}
 	@Override
-	public String getPassword(String id) {
+	public String getPassword(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -190,7 +190,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 			con = DatabaseUtil.getConnection();
 			String sql = "select upwd from user_info where uid=?";
 			ps = con.prepareStatement(sql);
-			ps.setObject(1,id);
+			ps.setInt(1,id);
 			rs = ps.executeQuery();
 			if (rs.next()) { 
 				passwd = rs.getString(1);

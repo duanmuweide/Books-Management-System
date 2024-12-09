@@ -68,7 +68,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public int deleteById(String id) {
+	public int deleteById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -77,7 +77,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 			con = DatabaseUtil.getConnection();
 			String sql = "delete from borrow where uid=?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1,id);
+			ps.setInt(1,id);
 			rows = ps.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -88,7 +88,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public Borrow getOneById(String id) {
+	public Borrow getOneById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -96,9 +96,9 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		Borrow borrow = null; 
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from borrow where bid=?";
+			String sql = "select * from borrow where uid=?";
 			ps = con.prepareStatement(sql);
-			ps.setObject(1,id);
+			ps.setInt(1,id);
 			rs = ps.executeQuery();
 			if (rs.next()) { 
 				borrow = new Borrow(rs.getInt(1),rs.getInt(2),rs.getDate(3),
@@ -186,7 +186,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 			con = DatabaseUtil.getConnection();
 			String sql = "select * from borrow where uid=?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1,user_id);
+			ps.setInt(1,user_id);
 			rs = ps.executeQuery();
 			while(rs.next()) { 
 				Borrow b=new Borrow(

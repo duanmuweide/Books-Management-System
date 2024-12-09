@@ -10,11 +10,17 @@ public interface UserInfoDao extends BaseDao {
 	
 	int update(UserInfo p);
 	
-	int deleteById(String id);
+	int deleteById(int id);
 	
-	UserInfo getOneById(String id);
+	UserInfo getOneById(int id);
 	
 	List<UserInfo> getAll();
 	
 	List<UserInfo> getAllByKeyword(String keyword);
+<<<<<<< HEAD
+
+	//获取密码
+	String getPassword(int id);
+=======
+>>>>>>> 1e73c4f3e56b3e606a9a17dca969424616b56166
 }
