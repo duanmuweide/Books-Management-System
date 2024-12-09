@@ -7,13 +7,13 @@ import com.libr.entity.Book;
 
 public interface BookDao extends BaseDao {
 	//插入
-	int insert(Book p);
+	int insertBook(Book p);
 	//更新
-	int update(Book p);
+	int updateBook(Book p);
 	
-	int deleteById(String id);
+	int deleteById(int id);
 	
-	Book getOneById(String id);
+	Book getOneById(int id);
 	
 	List<Book> getOneByDate(Date day);
 	

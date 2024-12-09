@@ -68,7 +68,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public int deleteById(String id) {
+	public int deleteById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -88,7 +88,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public Borrow getOneById(String id) {
+	public Borrow getOneById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -96,7 +96,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		Borrow borrow = null; 
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from borrow where bid=?";
+			String sql = "select * from borrow where uid=?";
 			ps = con.prepareStatement(sql);
 			ps.setObject(1,id);
 			rs = ps.executeQuery();
@@ -176,7 +176,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public List<Borrow> getBorrowByUid(String user_id) {
+	public List<Borrow> getBorrowByUid(int user_id) {
 		// TODO Auto-generated method stub
 		List<Borrow> list = new ArrayList<>();
 		Connection con = null;

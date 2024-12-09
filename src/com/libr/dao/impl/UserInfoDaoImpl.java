@@ -80,7 +80,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 	}
 
 	@Override
-	public int deleteById(String id) {
+	public int deleteById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -100,7 +100,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 	}
 
 	@Override
-	public UserInfo getOneById(String id) {
+	public UserInfo getOneById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -180,7 +180,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 		return list;
 	}
 	@Override
-	public String getPassword(String id) {
+	public String getPassword(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;

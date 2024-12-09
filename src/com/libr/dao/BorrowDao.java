@@ -10,9 +10,9 @@ public interface BorrowDao extends BaseDao {
 	
 	int update(Borrow p);
 	
-	int deleteById(String id);
+	int deleteById(int id);
 	
-	Borrow getOneById(String id);
+	Borrow getOneById(int id);
 	
 	List<Borrow> getAll();
 	
@@ -23,5 +23,5 @@ public interface BorrowDao extends BaseDao {
 	 */
 	List<Borrow> getAllByKeyword(String keyword);
 
-	List<Borrow> getBorrowByUid(String user_id);
+	List<Borrow> getBorrowByUid(int user_id);
 }

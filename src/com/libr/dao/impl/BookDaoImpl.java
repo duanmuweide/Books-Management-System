@@ -16,7 +16,7 @@ import com.libr.util.DatabaseUtil;
 public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
-	public int insert(Book p) {
+	public int insertBook(Book p) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int rows = 0; // 定义一个变量，存储受影响的行数
@@ -47,7 +47,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 
 	@Override
-	public int update(Book p) {
+	public int updateBook(Book p) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int rows = 0; // 定义一个变量，存储受影响的行数
@@ -73,7 +73,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 
 	@Override
-	public int deleteById(String id) {
+	public int deleteById(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int rows = 0; // 定义一个变量，存储受影响的行数
@@ -92,7 +92,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 
 	@Override
-	public Book getOneById(String id) {
+	public Book getOneById(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
