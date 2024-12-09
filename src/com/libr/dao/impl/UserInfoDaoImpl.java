@@ -27,7 +27,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 			ps.setObject(3,p.getUserPassword());
 			ps.setObject(4,p.getUserQuestion());
 			ps.setObject(5,p.getUserAnswer());
-			ps.setObject(6,p.isUseradmin());
+			ps.setObject(6,p.isUserAdmin());
 			ps.setObject(7,p.getUserGender());
 			ps.setObject(8,p.getUserContact());
 			ps.setObject(9,p.getUserRealname());
@@ -63,7 +63,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 			ps.setObject(3,p.getUserPassword());
 			ps.setObject(4,p.getUserQuestion());
 			ps.setObject(5,p.getUserAnswer());
-			ps.setObject(6,p.isUseradmin());
+			ps.setObject(6,p.isUserAdmin());
 			ps.setObject(7,p.getUserGender());
 			ps.setObject(8,p.getUserContact());
 			ps.setObject(9,p.getUserRealname());

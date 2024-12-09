@@ -10,7 +10,7 @@ public interface AdminService {
 	public void changePassword(int userPassword);
 
 	// 添加其他管理员账户
-	public void addManager();
+	public void addAdmin();
 
 	// 添加新图书
 	public void addBook(Book book);
@@ -38,4 +38,5 @@ public interface AdminService {
 	
 	// 根据图书id或名称关键字查询图书的借阅情况，如在馆的数量还有多少，位置等
 	public void viewBookStatement();
+
 }
