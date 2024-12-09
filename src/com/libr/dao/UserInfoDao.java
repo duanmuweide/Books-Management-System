@@ -18,4 +18,7 @@ public interface UserInfoDao extends BaseDao {
 	
 	
 	List<UserInfo> getAllByKeyword(String keyword);
+
+	//获取密码
+	String getPassword(String id);
 }
