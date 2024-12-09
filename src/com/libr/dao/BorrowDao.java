@@ -16,12 +16,11 @@ public interface BorrowDao extends BaseDao {
 	
 	List<Borrow> getAll();
 	
-	/**
-	 * 根据名称关键字查询产品列表
-	 * @param keyword 检索关键字
-	 * @return 一个满足查询条件的产品列表
-	 */
+	
 	List<Borrow> getAllByKeyword(String keyword);
+<<<<<<< HEAD
 
 	List<Borrow> getBorrowByUid(int user_id);
+=======
+>>>>>>> 1e73c4f3e56b3e606a9a17dca969424616b56166
 }

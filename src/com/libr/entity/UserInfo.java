@@ -6,7 +6,7 @@ public class UserInfo {
 	private String userPassword;
 	private String userQuestion;
 	private String userAnswer;
-	private boolean useradmin;
+	private boolean userAdmin;
 	private String userGender;
 	private String userContact;
 	private String userRealname;
@@ -43,11 +43,11 @@ public class UserInfo {
 	public void setUserAnswer(String userAnswer) {
 		this.userAnswer = userAnswer;
 	}
-	public boolean isUseradmin() {
-		return useradmin;
+	public boolean isUserAdmin() {
+		return userAdmin;
 	}
-	public void setUseradmin(boolean useradmin) {
-		this.useradmin = useradmin;
+	public void setUserAdmin(boolean userAdmin) {
+		this.userAdmin = userAdmin;
 	}
 	public String getUserGender() {
 		return userGender;
@@ -86,7 +86,7 @@ public class UserInfo {
 		this.userMajor = userMajor;
 	}
 	public UserInfo(Integer userId, String userName, String userPassword, String userQuestion, String userAnswer,
-			boolean useradmin, String userGender, String userContact, String userRealname, String userAddress,
+			boolean userAdmin, String userGender, String userContact, String userRealname, String userAddress,
 			String userEmail, String userMajor) {
 		super();
 		this.userId = userId;
@@ -94,7 +94,7 @@ public class UserInfo {
 		this.userPassword = userPassword;
 		this.userQuestion = userQuestion;
 		this.userAnswer = userAnswer;
-		this.useradmin = useradmin;
+		this.userAdmin = userAdmin;
 		this.userGender = userGender;
 		this.userContact = userContact;
 		this.userRealname = userRealname;
@@ -102,10 +102,11 @@ public class UserInfo {
 		this.userEmail = userEmail;
 		this.userMajor = userMajor;
 	}
+	public UserInfo(){}
 	@Override
 	public String toString() {
 		return "UserInfo [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
-				+ ", userQuestion=" + userQuestion + ", userAnswer=" + userAnswer + ", useradmin=" + useradmin
+				+ ", userQuestion=" + userQuestion + ", userAnswer=" + userAnswer + ", userAdmin=" + userAdmin
 				+ ", userGender=" + userGender + ", userContact=" + userContact + ", userRealname=" + userRealname
 				+ ", userAddress=" + userAddress + ", userEmail=" + userEmail + ", userMajor=" + userMajor + "]";
 	}
