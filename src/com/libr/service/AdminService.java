@@ -1,6 +1,7 @@
 package com.libr.service;
 
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 import com.libr.entity.Book;
 
@@ -22,13 +23,13 @@ public interface AdminService {
 	public void deleteBook(int bookId);
 
 	// 根据ID查询书籍
-	public void searchBookById(int bookId);
+	public Book searchBookById(int bookId);
 
 	// 根据关键词搜索
-	public void searchBookByName(String keyword);
+	public List<Book> searchBookByName(String keyword);
 
 	// 根据日期搜寻
-	public void searchBookByDate(LocalDate date);
+	public List<Book> searchBookByDate(Date date);
 	
 	// 通过id查询借阅记录和还书记录
 	public void viewBorrowRecordsById();

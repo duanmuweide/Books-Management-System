@@ -1,5 +1,8 @@
 package com.libr.service;
 
+import java.util.List;
+
+import com.libr.entity.Book;
 import com.libr.entity.UserInfo;
 
 //UserService接口： 声明用户相关的业务功能
@@ -17,10 +20,10 @@ public interface UserService {
 	public void changeUserInfo(UserInfo user);
 
 	// 通过作者查询书籍信息
-	public void serachBookByWriter(String bookWriterName);
+	public List<Book> serachBookByWriter(String bookWriterName);
 
 	// 通过关键字查询书籍信息
-	public void serachBookByBookName(String bookName);
+	public List<Book> serachBookByBookName(String bookName);
 	
 	//查询借书记录
 	public void serachBorrowRecord();

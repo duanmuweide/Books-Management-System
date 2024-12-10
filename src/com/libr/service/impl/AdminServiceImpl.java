@@ -1,7 +1,8 @@
 package com.libr.service.impl;
 
 import java.sql.Connection;
-import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -66,19 +67,17 @@ public class AdminServiceImpl implements AdminService {
 		try {
 			UserInfoDaoImpl userInfoDaoImpl = new UserInfoDaoImpl();
 			userInfoDaoImpl.insert(newAdmin);
+			System.out.println("管理员添加成功！");
 		} catch (Exception e) {
 			System.out.println("管理员添加失败！");
 			e.printStackTrace();
-		}finally {
-			System.out.println("管理员添加成功！");
 		}
 	}
-
 
 	// 添加新图书
 	@Override
 	public void addBook(Book book) {
-		BookDao.insert(book);
+		BookDao.insertBook(book);
 	}
 
 	// 修改图书信息
@@ -89,7 +88,7 @@ public class AdminServiceImpl implements AdminService {
 			book.setBookName(newName);
 			book.setBookType(newType);
 			book.setBookNumber(newNumber);
-			BookDao.update(book);
+			BookDao.updateBook(book);
 			System.out.println("图书信息修改成功: " + book.getBookName());
 		} else {
 			System.out.println("没有找到ID为 " + bookId + " 的图书");
@@ -99,39 +98,45 @@ public class AdminServiceImpl implements AdminService {
 	// 删除图书
 	@Override
 	public void deleteBook(int bookId) {
-		BookDao.deleteBook(bookId);
+		BookDao.deleteById(bookId);
 	}
 
 	// 根据ID查询图书
 	@Override
-	public void searchBookById(int bookId) {
-		Book book = BookDao.findBookById(bookId);
+	public Book searchBookById(int bookId) {
+		Book book = BookDao.getOneById(bookId);
 		if (book != null) {
 			System.out.println("找到图书: " + book);
+			return book;
 		} else {
 			System.out.println("没有找到ID为 " + bookId + " 的图书");
 		}
+		return null;
 	}
 
 	// 根据名称搜索图书
 	@Override
-	public void searchBookByName(String keyword) {
-		List<Book> books = BookDao.searchBooksByName(keyword);
+	public List<Book> searchBookByName(String keyword) {
+		List<Book> books = BookDao.getOneByBookName(keyword);
 		if (books.isEmpty()) {
 			System.out.println("没有找到包含关键词 '" + keyword + "' 的图书");
+			return Collections.emptyList();
 		} else {
-			books.forEach(book -> System.out.println("找到图书: " + book));
+			books.forEach(book -> System.out.println("找到图书: " + book));// lambuda
+			return books;
 		}
 	}
 
 	// 根据日期搜索图书
 	@Override
-	public void searchBookByDate(LocalDate date) {
-		List<Book> books = BookDao.searchBooksByDate(date);
+	public List<Book> searchBookByDate(Date date) {
+		List<Book> books = BookDao.getOneByDate(date);
 		if (books.isEmpty()) {
 			System.out.println("没有找到日期为 " + date + " 的图书");
+			return Collections.emptyList();
 		} else {
 			books.forEach(book -> System.out.println("找到图书: " + book));
+			return books;
 		}
 	}
 
