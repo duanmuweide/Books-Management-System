@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mysql1
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
  Source Server Version : 80021
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 29/11/2024 15:21:16
+ Date: 11/12/2024 17:36:01
 */
 
 SET NAMES utf8mb4;
@@ -42,13 +42,15 @@ CREATE TABLE `book`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `borrow`;
 CREATE TABLE `borrow`  (
-  `uid` int NOT NULL COMMENT '引用user_info(uid)，作为外键+主键\r\n',
+  `uid` int NOT NULL COMMENT '引用user_info(uid)，作为外键\r\n',
   `bid` int NOT NULL COMMENT '图书类型编号，外键，自动增长\r\n',
   `borrowtime` date NOT NULL COMMENT '借阅时间\r\n',
   `bstatement` tinyint(1) NOT NULL COMMENT '图书是否在馆，外键\r\n',
   `breturntime` date NOT NULL COMMENT '归还时间\r\n',
   `bnumber` int NOT NULL COMMENT '借阅数量',
-  PRIMARY KEY (`uid`) USING BTREE,
+  `borrowid` int NOT NULL COMMENT '主键,该表的主键',
+  PRIMARY KEY (`borrowid`) USING BTREE,
+  INDEX `a`(`uid` ASC) USING BTREE,
   INDEX `b`(`bid` ASC) USING BTREE,
   CONSTRAINT `a` FOREIGN KEY (`uid`) REFERENCES `user_info` (`uid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `b` FOREIGN KEY (`bid`) REFERENCES `book` (`bid`) ON DELETE RESTRICT ON UPDATE RESTRICT
