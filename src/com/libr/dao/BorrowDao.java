@@ -1,5 +1,6 @@
 package com.libr.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.libr.entity.Borrow;
@@ -20,4 +21,9 @@ public interface BorrowDao extends BaseDao {
 	List<Borrow> getAllByKeyword(String keyword);
 
 	List<Borrow> getBorrowByUid(int user_id);
+	
+	List<List<Date>> viewBorrowRecordsById(int user_id);
+	
+	
+		
 }

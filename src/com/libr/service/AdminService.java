@@ -37,7 +37,7 @@ public interface AdminService {
 	// 根据用户id查询用户未还的图书记录
 	public void viewUnreturnedRecordsById();
 	
-	// 根据图书id或名称关键字查询图书的借阅情况，如在馆的数量还有多少，位置等
+	// 根据用户id查询用户未还的图书记录
 	public void viewBookStatement();
 
 }

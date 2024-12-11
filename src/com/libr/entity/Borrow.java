@@ -10,8 +10,9 @@ public class Borrow {
 	private Date borrowReturnTime;
 	private Boolean bookStatement;
 	private int bookNumber;
+	private int borrowId;
 	public Borrow(int useId,int bookId, Date borrowTime,
-			Boolean bookStatement, Date borrowReturnTime, int bookNumber) {
+			Boolean bookStatement, Date borrowReturnTime, int bookNumber,int borrowId) {
 		super();
 		this.useId = useId;
 		this.bookId = bookId;
@@ -19,12 +20,19 @@ public class Borrow {
 		this.bookStatement = bookStatement;
 		this.borrowReturnTime = borrowReturnTime;
 		this.bookNumber = bookNumber;
+		this.borrowId = borrowId;
 	}
 	@Override
 	public String toString() {
-		return "Borrow [bookId=" + bookId + ", useId=" + useId + ",  borrowTime=" + borrowTime
+		return "Borrow [borrowId="+borrowId+",bookId=" + bookId + ", useId=" + useId + ",  borrowTime=" + borrowTime
 				+ ", borrowReturnTime=" + borrowReturnTime + ", bookStatement=" + bookStatement + ", bookNumber="
 				+ bookNumber + "]";
+	}
+	public int getBorrowId() {
+		return borrowId;
+	}
+	public void setBorrowId(int borrowId) {
+		this.borrowId = borrowId;
 	}
 	public int getBookId() {
 		return bookId;
@@ -62,5 +70,4 @@ public class Borrow {
 	public void setBookNumber(int bookNumber) {
 		this.bookNumber = bookNumber;
 	}
-	
 }

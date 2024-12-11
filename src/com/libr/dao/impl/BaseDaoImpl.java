@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.libr.dao.BaseDao;
+import com.libr.entity.Borrow;
 import com.libr.util.DatabaseUtil;
 
 public class BaseDaoImpl implements BaseDao {

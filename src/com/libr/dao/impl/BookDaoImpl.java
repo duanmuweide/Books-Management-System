@@ -280,4 +280,57 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		}
 		return list;
 	}
+
+	@Override
+	public List<List<Object>> viewBookStatement(int bid) {
+		// TODO Auto-generated method stub
+		// 根据图书id查询图书的在馆的数量，位置
+		List<List<Object>> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select bnumber,bposition from book where bid=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1,bid);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				List<Object> l = new ArrayList<>();
+				l.add(rs.getInt(1));
+				l.add(rs.getString(2));
+				list.add(l);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<String> viewUnreturnedRecordsById(int user_id) {
+		// TODO Auto-generated method stub
+		// 根据用户id查询用户未还的图书记录
+		List<String> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select bname from book where bid in (select bid from borrow where breturntime < CURDATE() and uid=?)";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1,user_id);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				list.add(rs.getString(1));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return list;
+	}
 }

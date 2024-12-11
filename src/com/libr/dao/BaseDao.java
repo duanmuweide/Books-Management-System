@@ -2,6 +2,7 @@ package com.libr.dao;
 
 import java.util.List;
 
+
 public interface BaseDao {
 	
 	// 查询单条记录（管理员查询借书还书记录）
@@ -18,4 +19,5 @@ public interface BaseDao {
 	
 	//执行管理员对图书的更新或用户对个人信息的修改
 	int executeUpdate(String sql, Object... params);
+
 }
