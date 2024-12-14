@@ -46,7 +46,7 @@ CREATE TABLE `borrow`  (
   `bid` int NOT NULL COMMENT '图书类型编号，外键，自动增长\r\n',
   `borrowtime` date NOT NULL COMMENT '借阅时间\r\n',
   `bstatement` tinyint(1) NOT NULL COMMENT '图书是否在馆，外键\r\n',
-  `breturntime` date NOT NULL COMMENT '归还时间\r\n',
+  `breturntime` date  COMMENT '归还时间\r\n',
   `bnumber` int NOT NULL COMMENT '借阅数量',
   `borrowid` int NOT NULL COMMENT '主键,该表的主键',
   PRIMARY KEY (`borrowid`) USING BTREE,

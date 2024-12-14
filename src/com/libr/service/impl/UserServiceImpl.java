@@ -4,9 +4,12 @@ import java.util.Collections;
 import java.util.List;
 
 import com.libr.dao.BookDao;
+import com.libr.dao.BorrowDao;
 import com.libr.dao.impl.BookDaoImpl;
+import com.libr.dao.impl.BorrowDaoImpl;
 import com.libr.dao.impl.UserInfoDaoImpl;
 import com.libr.entity.Book;
+import com.libr.entity.Borrow;
 import com.libr.entity.UserInfo;
 import com.libr.service.UserService;
 
@@ -79,22 +82,27 @@ public class UserServiceImpl implements UserService {
 
 	// 寻找借书记录
 	@Override
-	public void serachBorrowRecord() {
-		// TODO Auto-generated method stub
-
+	public List<Borrow> serachBorrowRecordById(int userId) {
+		BorrowDao bd=new BorrowDaoImpl();
+		List<Borrow> borrowRecords = bd.getBorrowByUid(userId);
+		return borrowRecords;
 	}
 
 	// 寻找还书记录
 	@Override
-	public void serachReturnRecord() {
-		// TODO Auto-generated method stub
+	public List<Borrow> serachReturnRecordById(int userId) {
+		BorrowDao bd=new BorrowDaoImpl();
+		List<String> unreturnedBooks = bd.viewUnreturnedRecordsById(userId);
 
 	}
 
 	// 修改个人信息
+	
 	@Override
-	public void changeUserInfo(UserInfo user) {
+	public UserInfo changeUserInfo(UserInfo user) {
 		// TODO Auto-generated method stub
-
+		UserInfo ui=new UserInfo();
+		//写更改个人信息的详细操作
+		return ui;
 	}
 }

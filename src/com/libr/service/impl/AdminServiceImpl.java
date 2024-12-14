@@ -43,6 +43,7 @@ public class AdminServiceImpl implements AdminService {
 		UserInfo newAdmin = new UserInfo();
 		// 输入名称
 		System.out.print("请输入管理员名称：");
+		@SuppressWarnings("resource")//不知道为什么警告所以暂时表示默许
 		Scanner scan = new Scanner(System.in);
 		String newname = scan.nextLine();
 		newAdmin.setUserName(newname);

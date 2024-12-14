@@ -20,7 +20,7 @@ public interface BorrowDao extends BaseDao {
 	
 	List<Borrow> getAllByKeyword(String keyword);
 
-	List<Borrow> getBorrowByUid(int user_id);
+	List<Borrow> getBorrowByUid(int userId);
 	
 	List<List<Date>> viewBorrowRecordsById(int user_id);
 	
