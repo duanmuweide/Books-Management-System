@@ -180,33 +180,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		return list;
 	}
 
-	@Override
-	public List<List<Date>> viewBorrowRecordsById(int user_id) {
-		// TODO Auto-generated method stub
-		//根据用户id查询借阅记录
-		List<List<Date>> list = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			con = DatabaseUtil.getConnection();
-			String sql = "select borrowtime,breturntime from borrow where uid=?";
-			ps = con.prepareStatement(sql);
-			ps.setInt(1,user_id);
-			rs = ps.executeQuery();
-			while(rs.next()) { 
-				List<Date> l = new ArrayList<>();
-				l.add(rs.getDate(1));
-				l.add(rs.getDate(2));
-				list.add(l);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			DatabaseUtil.close(null, ps, con);
-		}
-		return list;
-	}
+	
 	@Override
 	public List<Borrow> getAllByKeyword(String keyword) {
 		// TODO Auto-generated method stub
@@ -232,6 +206,54 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 						rs.getInt(7)
 					);
 			list.add(b);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Date> viewBorrowRecordsBorrowById(int user_id) {
+		// TODO Auto-generated method stub
+		List<Date> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select borrowtime from borrow where uid=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1,user_id);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				list.add(rs.getDate(1));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Date> viewBorrowRecordsReturnById(int user_id) {
+		// TODO Auto-generated method stub
+		List<Date> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select breturntime from borrow where uid=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1,user_id);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				list.add(rs.getDate(1));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
