@@ -22,6 +22,8 @@ public class Borrow {
 		this.bookNumber = bookNumber;
 		this.borrowId = borrowId;
 	}
+	public Borrow() {
+	}
 	@Override
 	public String toString() {
 		return "Borrow [borrowId="+borrowId+",bookId=" + bookId + ", useId=" + useId + ",  borrowTime=" + borrowTime

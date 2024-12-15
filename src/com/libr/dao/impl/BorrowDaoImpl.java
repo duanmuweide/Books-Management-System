@@ -217,8 +217,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 
 	@Override
 	public List<Borrow> viewBorrowRecordsById(int user_id) {
-		// TODO Auto-generated method stub
-		List<Date> list = new ArrayList<>();
+		List<Borrow> borrowList = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -229,38 +228,53 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 			ps.setInt(1,user_id);
 			rs = ps.executeQuery();
 			while(rs.next()) { 
-				list.add(rs.getDate(1));
+				Date borrowTime = rs.getDate("borrowtime");
+	            Date returnTime = rs.getDate("breturntime");
+	            int bookId = rs.getInt("book_id");  // 我不知道你这边变量是什么，你看着改改
+	            Borrow borrow = new Borrow();
+	            borrow.setUseId(user_id);
+	            borrow.setBorrowTime(borrowTime);
+	            borrow.setBorrowReturnTime(returnTime);
+	            borrow.setBookId(bookId);
+	            borrowList.add(borrow);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			DatabaseUtil.close(null, ps, con);
 		}
-		return list;
+		return borrowList;
 	}
 
 	@Override
 	public List<Borrow> viewReturnRecordsById(int user_id) {
-		// TODO Auto-generated method stub
-		List<Date> list = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			con = DatabaseUtil.getConnection();
-			String sql = "select breturntime from borrow where uid=?";
-			ps = con.prepareStatement(sql);
-			ps.setInt(1,user_id);
-			rs = ps.executeQuery();
-			while(rs.next()) { 
-				list.add(rs.getDate(1));
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			DatabaseUtil.close(null, ps, con);
-		}
-		return list;
+	    List<Borrow> returnList = new ArrayList<>();
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    try {
+	        con = DatabaseUtil.getConnection();
+	        String sql = "SELECT borrowtime, breturntime, book_id FROM borrow WHERE uid=? AND breturntime IS NOT NULL";
+	        ps = con.prepareStatement(sql);
+	        ps.setInt(1, user_id);
+	        rs = ps.executeQuery();
+	        while (rs.next()) {
+	            Date borrowTime = rs.getDate("borrowtime");
+	            Date returnTime = rs.getDate("breturntime");
+	            int bookId = rs.getInt("book_id");
+	            Borrow borrow = new Borrow();
+	            borrow.setUseId(user_id);
+	            borrow.setBorrowTime(borrowTime);
+	            borrow.setBorrowReturnTime(returnTime);
+	            borrow.setBookId(bookId);
+	            returnList.add(borrow);
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    } finally {
+	        DatabaseUtil.close(null, ps, con);
+	    }
+	    return returnList;
 	}
 
 }
