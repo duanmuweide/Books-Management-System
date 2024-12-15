@@ -26,7 +26,7 @@ public interface BookDao extends BaseDao {
 	List<Book> getAllByKeyword(String keyword);
 	
 	// 根据图书id查询图书的在馆的数量，位置
-	List<List<Object>> viewBookStatement(int bid);
+	List<Book> viewBookStatement(int bid);
 	
 	// 根据用户id查询用户未还的图书记录
 	List<String> viewUnreturnedRecordsById(int user_id);
