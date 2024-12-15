@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.libr.dao.BookDao;
-import com.libr.dao.BorrowDao;
 import com.libr.dao.impl.BookDaoImpl;
-import com.libr.dao.impl.BorrowDaoImpl;
 import com.libr.dao.impl.UserInfoDaoImpl;
 import com.libr.entity.Book;
-import com.libr.entity.Borrow;
 import com.libr.entity.UserInfo;
 import com.libr.service.AdminService;
 
@@ -46,7 +43,7 @@ public class AdminServiceImpl implements AdminService {
 		UserInfo newAdmin = new UserInfo();
 		// 输入名称
 		System.out.print("请输入管理员名称：");
-		@SuppressWarnings("resource") // 不知道为什么警告所以暂时表示默许
+		@SuppressWarnings("resource")//不知道为什么警告所以暂时表示默许
 		Scanner scan = new Scanner(System.in);
 		String newname = scan.nextLine();
 		newAdmin.setUserName(newname);
@@ -145,30 +142,21 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Borrow> serachBorrowRecordById(int userId) {
-		BorrowDao bd = new BorrowDaoImpl();
-		List<Borrow> borrowRecords = bd.viewReturnRecordsById(userId);
-		return borrowRecords;
+	public void viewBorrowRecordsById() {//serachBorrowRecordById(String userId)
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public List<Borrow> serachReturnRecordById(int userId) {
-		BorrowDao bd = new BorrowDaoImpl();
-		List<Borrow> returnRecords = bd.viewReturnRecordsById(userId);
-		return returnRecords;
+	public void viewUnreturnedRecordsById() {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override // 根据图书id查询图书的在馆的数量，位置
-	public list<Book> viewBookStatement(int bid) {
-		BookDao bd = new BookDaoImpl();
-		List<Book> bookStatement = bd.viewBookStatement(bid);
-		return bookStatement;
-	}
+	@Override
+	public void viewBookStatement() {
+		// TODO Auto-generated method stub
 
-	// 根据用户id查询用户未还的图书记录
-	List<Book> viewUnreturnedRecordsById(int uid){
-		return null;
-		
 	}
 
 }

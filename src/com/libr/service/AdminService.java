@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.libr.entity.Book;
-import com.libr.entity.Borrow;
 
 //AdminService接口： 声明产品相关的业务功能
 public interface AdminService {
@@ -31,20 +30,14 @@ public interface AdminService {
 
 	// 根据日期搜寻
 	public List<Book> searchBookByDate(Date date);
-
-	// 通过id查询借阅记录
-	public List<Borrow> serachBorrowRecordById(int userId);
-
-	// 通过id查询还书记录
-	public List<Borrow> serachReturnRecordById(int userId);
-
-	// 根据用户id查询用户未还的图书记录
-	public List<Book> viewUnreturnedBookById(int uid);
 	
-	// 根据图书id或名称关键字查询图书的借阅情况
-	public void viewBookStatementByid(int bid);
-
-	// 根据图书名称关键字查询图书的借阅情况
-	public void viewBookStatementBykeywords(String keywords);
+	// 通过id查询借阅记录和还书记录
+	public void viewBorrowRecordsById();
+	
+	// 根据用户id查询用户未还的图书记录
+	public void viewUnreturnedRecordsById();
+	
+	// 根据用户id查询用户未还的图书记录
+	public void viewBookStatement();
 
 }
