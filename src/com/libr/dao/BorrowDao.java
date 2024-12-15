@@ -23,9 +23,9 @@ public interface BorrowDao extends BaseDao {
 	List<Borrow> getBorrowByUid(int userId);
 	
 	//这是根据用户id查借记录
-	List<Date> viewBorrowRecordsBorrowById(int user_id);
+	List<Borrow> viewBorrowRecordsById(int user_id);
 	
 	//这是根据用户id查还记录
-	List<Date> viewBorrowRecordsReturnById(int user_id);
+	List<Borrow> viewReturnRecordsById(int user_id);
 		
 }

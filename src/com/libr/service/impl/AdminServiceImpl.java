@@ -142,7 +142,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void viewBorrowRecordsById() {
+	public void viewBorrowRecordsById() {//serachBorrowRecordById(String userId)
 		// TODO Auto-generated method stub
 
 	}

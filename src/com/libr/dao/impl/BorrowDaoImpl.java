@@ -216,7 +216,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public List<Date> viewBorrowRecordsBorrowById(int user_id) {
+	public List<Borrow> viewBorrowRecordsById(int user_id) {
 		// TODO Auto-generated method stub
 		List<Date> list = new ArrayList<>();
 		Connection con = null;
@@ -240,7 +240,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public List<Date> viewBorrowRecordsReturnById(int user_id) {
+	public List<Borrow> viewReturnRecordsById(int user_id) {
 		// TODO Auto-generated method stub
 		List<Date> list = new ArrayList<>();
 		Connection con = null;
