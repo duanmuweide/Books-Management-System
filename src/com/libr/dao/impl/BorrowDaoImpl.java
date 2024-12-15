@@ -223,20 +223,21 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select borrowtime from borrow where uid=?";
+			String sql = "select * from borrow where uid=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1,user_id);
 			rs = ps.executeQuery();
 			while(rs.next()) { 
-				Date borrowTime = rs.getDate("borrowtime");
-	            Date returnTime = rs.getDate("breturntime");
-	            int bookId = rs.getInt("book_id");  // 我不知道你这边变量是什么，你看着改改
-	            Borrow borrow = new Borrow();
-	            borrow.setUseId(user_id);
-	            borrow.setBorrowTime(borrowTime);
-	            borrow.setBorrowReturnTime(returnTime);
-	            borrow.setBookId(bookId);
-	            borrowList.add(borrow);
+				Borrow b=new Borrow(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getDate(3),
+						rs.getBoolean(4),
+						rs.getDate(5),
+						rs.getInt(6),
+						rs.getInt(7)
+					);
+				borrowList.add(b);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -254,20 +255,21 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	    ResultSet rs = null;
 	    try {
 	        con = DatabaseUtil.getConnection();
-	        String sql = "SELECT borrowtime, breturntime, book_id FROM borrow WHERE uid=? AND breturntime IS NOT NULL";
+	        String sql = "SELECT * FROM borrow WHERE uid=? AND breturntime IS NOT NULL";
 	        ps = con.prepareStatement(sql);
 	        ps.setInt(1, user_id);
 	        rs = ps.executeQuery();
 	        while (rs.next()) {
-	            Date borrowTime = rs.getDate("borrowtime");
-	            Date returnTime = rs.getDate("breturntime");
-	            int bookId = rs.getInt("book_id");
-	            Borrow borrow = new Borrow();
-	            borrow.setUseId(user_id);
-	            borrow.setBorrowTime(borrowTime);
-	            borrow.setBorrowReturnTime(returnTime);
-	            borrow.setBookId(bookId);
-	            returnList.add(borrow);
+	        	Borrow b=new Borrow(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getDate(3),
+						rs.getBoolean(4),
+						rs.getDate(5),
+						rs.getInt(6),
+						rs.getInt(7)
+					);
+	        	returnList.add(b);
 	        }
 	    } catch (Exception ex) {
 	        ex.printStackTrace();

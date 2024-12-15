@@ -9,13 +9,13 @@ public class Book {
 	private String bookType;
 	private String bookWriterName;
 	private int bookNumber;
-	private String bookStatement;
+	private boolean bookStatement;
 	private String bookPosition;
 	private Date bookTime;
 	
 	
 	public Book(int bookId, String bookName, String bookType, String bookWriterName, int bookNumber,
-			String bookStatement, String bookPosition, Date bookTime) {
+			boolean bookStatement, String bookPosition, Date bookTime) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -57,10 +57,10 @@ public class Book {
 	public void setBookNumber(int bookNumber) {
 		this.bookNumber = bookNumber;
 	}
-	public String getBookStatement() {
+	public boolean getBookStatement() {
 		return bookStatement;
 	}
-	public void setBookStatement(String bookStatement) {
+	public void setBookStatement(boolean bookStatement) {
 		this.bookStatement = bookStatement;
 	}
 	public String getBookPosition() {

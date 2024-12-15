@@ -105,7 +105,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 			rs = ps.executeQuery();
 			if (rs.next()) { 
 				book = new Book(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),
-						rs.getInt(5),rs.getString(6),rs.getString(7),rs.getDate(8));
+						rs.getInt(5),rs.getBoolean(6),rs.getString(7),rs.getDate(8));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -133,7 +133,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getInt(5),
-						rs.getString(6),
+						rs.getBoolean(6),
 						rs.getString(7),
 						rs.getDate(8)
 					);
@@ -166,7 +166,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getInt(5),
-						rs.getString(6),
+						rs.getBoolean(6),
 						rs.getString(7),
 						rs.getDate(8)
 					);
@@ -199,7 +199,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getInt(5),
-						rs.getString(6),
+						rs.getBoolean(6),
 						rs.getString(7),
 						rs.getDate(8)
 					);
@@ -233,7 +233,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getInt(5),
-						rs.getString(6),
+						rs.getBoolean(6),
 						rs.getString(7),
 						rs.getDate(8)
 					);
@@ -267,7 +267,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getInt(5),
-						rs.getString(6),
+						rs.getBoolean(6),
 						rs.getString(7),
 						rs.getDate(8)
 					);
@@ -282,24 +282,31 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 
 	@Override
-	public List<List<Object>> viewBookStatement(int bid) {
+	public List<Book> viewBookStatement(int bid) {
 		// TODO Auto-generated method stub
 		// 根据图书id查询图书的在馆的数量，位置
-		List<List<Object>> list = new ArrayList<>();
+		List<Book> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select bnumber,bposition from book where bid=?";
+			String sql = "select * from book where bid=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1,bid);
 			rs = ps.executeQuery();
 			while(rs.next()) { 
-				List<Object> l = new ArrayList<>();
-				l.add(rs.getInt(1));
-				l.add(rs.getString(2));
-				list.add(l);
+				Book b=new Book(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getInt(5),
+						rs.getBoolean(6),
+						rs.getString(7),
+						rs.getDate(8)
+					);
+				list.add(b);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -325,6 +332,40 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 			rs = ps.executeQuery();
 			while(rs.next()) { 
 				list.add(rs.getString(1));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Book> viewBookStatementByKeywords(String bname) {
+		// TODO Auto-generated method stub
+		List<Book> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select * from book where bname like '%?%' ";
+			ps = con.prepareStatement(sql);
+			ps.setString(1,bname);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				Book b=new Book(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getInt(5),
+						rs.getBoolean(6),
+						rs.getString(7),
+						rs.getDate(8)
+					);
+				list.add(b);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
