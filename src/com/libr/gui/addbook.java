@@ -1,75 +1,78 @@
 package com.libr.gui;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class addbook extends JFrame {
-    public addbook() {
-        setTitle("注册界面");
-        setSize(300, 400);
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class find_man extends JFrame {
+
+    private JTextField bookNameField;
+    private JTextField authorNameField;
+    private JTextField IDField;
+    private JTextArea resultArea;
+
+    public find_man() {
+        // 设置窗口标题和默认关闭操作
+        setTitle("图书查找页面");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        setLayout(new BorderLayout());
 
-        // 创建输入组件
-        JTextField idField = new JTextField(20);
-        JTextField nameField = new JTextField(20);
-        nameField.setFont(new Font(nameField.getFont().getName(), Font.BOLD, nameField.getFont().getSize()));
-        JTextField typeField = new JTextField(20);
-        typeField.setFont(new Font(typeField.getFont().getName(), Font.BOLD, typeField.getFont().getSize()));
-        JTextField authorField = new JTextField(20);
-        authorField.setFont(new Font(authorField.getFont().getName(), Font.BOLD, authorField.getFont().getSize()));
-        JTextField locationField = new JTextField(20);
-        locationField.setFont(new Font(locationField.getFont().getName(), Font.BOLD, locationField.getFont().getSize()));
-        JTextField numberield = new JTextField(20);
+        // north部分：输入图书名称和作者名称
+        JPanel northPanel = new JPanel();
+        northPanel.setPreferredSize(new Dimension(0, 55));
+        northPanel.add(new JLabel("图书名称:"));
+        bookNameField = new JTextField(20);
+        bookNameField.setFont(new Font(bookNameField.getFont().getName(), Font.BOLD, bookNameField.getFont().getSize()));
+        northPanel.add(bookNameField);
 
-        // 添加组件到界面
-        int y = 0;
-        addLabelAndField("ID:", idField, gbc, y++);
-        addLabelAndField("名称:", nameField, gbc, y++);
-        addLabelAndField("类型:", typeField, gbc, y++);
-        addLabelAndField("作者:", authorField, gbc, y++);
-        addLabelAndField("位置:", locationField, gbc, y++);
-        addLabelAndField("数量:", numberield, gbc, y++);
+        northPanel.add(new JLabel("作者名称:"));
+        authorNameField = new JTextField(20);
+        authorNameField.setFont(new Font(authorNameField.getFont().getName(), Font.BOLD, authorNameField.getFont().getSize()));
+        northPanel.add(authorNameField);
 
-        // 添加提交按钮
-        JButton submitButton = new JButton("添加书籍");
-        gbc.gridx = 0;
-        gbc.gridy = y;
-        gbc.gridwidth = 3; // 设置宽度占满整个布局
-        gbc.fill = GridBagConstraints.NONE; // 不填充整个区域
-        gbc.anchor = GridBagConstraints.CENTER; // 居中对齐
-        add(submitButton, gbc);
-
-        // 设置窗口居中
-        setLocationRelativeTo(null);
+        northPanel.add(new JLabel("图书ID:"));
+        IDField = new JTextField(20);
+        IDField.setFont(new Font(IDField.getFont().getName(), Font.BOLD, IDField.getFont().getSize()));
+        northPanel.add(IDField);
         
-        submitButton.addActionListener(new ActionListener() {
-	    	 public void actionPerformed(ActionEvent e) {
-	    		 
-	    	 }
-	     });
-        
-    }
+        JButton searchButton = new JButton("查找");
+        northPanel.add(searchButton);
 
-    private void addLabelAndField(String labelText, JTextField field, GridBagConstraints gbc, int y) {
-        gbc.gridx = 0;
-        gbc.gridy = y;
-        gbc.gridwidth = 1;
-        add(new JLabel(labelText), gbc);
+        // 为查找按钮添加事件监听器
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+           
+                String bookName = bookNameField.getText();
+                String authorName = authorNameField.getText();
+                resultArea.setText("查找图书名称包含 \"" + bookName + "\" 且作者名称包含 \"" + authorName + "\" 的图书信息。");
+            }
+        });
 
-        gbc.gridx = 1;
-        gbc.gridy = y;
-        gbc.gridwidth = 2;
-        add(field, gbc);
+        add(northPanel, BorderLayout.NORTH);
+
+        // center部分：显示查找到的图书信息
+        resultArea = new JTextArea();
+        resultArea.setEditable(false);
+        add(new JScrollPane(resultArea), BorderLayout.CENTER);
+
+        // 设置窗口大小和可见性
+        setSize(600, 400);
+        setLocationRelativeTo(null); // 居中显示
     }
 
     public static void main(String[] args) {
-    	addbook frame=new addbook(); 
-       frame.setVisible(true);
+        // 直接在main方法中创建并显示GUI
+        find_man frame = new find_man();
+        frame.setVisible(true);
     }
 }
