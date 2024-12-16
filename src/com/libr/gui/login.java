@@ -23,7 +23,7 @@ public class login extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-
+		
 		JPanel container = new JPanel();
 		container.setBackground(Color.white);
 		container.setLayout(null);
@@ -88,7 +88,7 @@ public class login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// 获取下拉列表的信息，但是注意要写在监听器里面
 				String selectedIdentity = (String) comboBox.getSelectedItem();
-
+				
 				// 获取文本框的内容，存储到一个变量中
 				String id = tf_id.getText();
 				// getPassword()返回的是一个char[]
@@ -96,7 +96,6 @@ public class login extends JFrame {
 				// 这里将一个char[]转成一个字符串
 				String pwd = new String(chs);
 				
-				// 注意：字符串判断是否相等要用equals()方法
 				if ("anna".equals(id) && "1234".equals(pwd) && selectedIdentity.equals("学生")) {
 					// 显示新窗体的同时，可以将当前窗体关闭
 					// dispose()方法表示销毁一个窗体
@@ -151,4 +150,3 @@ public class login extends JFrame {
 		frame.setVisible(true);
 	}
 }
-
