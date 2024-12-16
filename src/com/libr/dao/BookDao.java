@@ -29,7 +29,7 @@ public interface BookDao extends BaseDao {
 	List<Book> viewBookStatement(int bid);
 	
 	// 根据用户id查询用户未还的图书记录
-	List<String> viewUnreturnedRecordsById(int user_id);
+	List<Book> viewUnreturnedRecordsById(int user_id);
 	
 	//根据图书关键词查询图书在管数量，位置 
 	List<Book> viewBookStatementByKeywords(String bname);

@@ -39,7 +39,7 @@ public interface AdminService {
 	public List<Borrow> serachReturnRecordById(int userId);
 
 	// 根据用户id查询用户未还的图书记录
-	public List<Borrow> viewUnreturnedBookById(int uid);
+	public List<Book> viewUnreturnedBookById(int uid);
 	
 	// 根据图书id或名称关键字查询图书的借阅情况
 	public List<Book> viewBookStatementByid(int bid);

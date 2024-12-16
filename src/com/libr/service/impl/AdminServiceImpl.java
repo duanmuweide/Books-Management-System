@@ -144,31 +144,39 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 
-	@Override
+	@Override//借书记录
 	public List<Borrow> serachBorrowRecordById(int userId) {
 		BorrowDao bd = new BorrowDaoImpl();
 		List<Borrow> borrowRecords = bd.viewReturnRecordsById(userId);
 		return borrowRecords;
 	}
 
-	@Override
+	@Override//还书记录
 	public List<Borrow> serachReturnRecordById(int userId) {
 		BorrowDao bd = new BorrowDaoImpl();
 		List<Borrow> returnRecords = bd.viewReturnRecordsById(userId);
 		return returnRecords;
 	}
-
+	
 	@Override // 根据图书id查询图书的在馆的数量，位置
-	public list<Book> viewBookStatement(int bid) {
+	public List<Book> viewBookStatementByid(int bid) {
 		BookDao bd = new BookDaoImpl();
 		List<Book> bookStatement = bd.viewBookStatement(bid);
 		return bookStatement;
 	}
-
-	// 根据用户id查询用户未还的图书记录
-	public List<Book> viewUnreturnedRecordsById(int uid){
-		return null;
-		
+	@Override// 根据关键词查询图书的在馆的数量，位置
+	public List<Book> viewBookStatementBykeywords(String keywords) {
+		BookDao bd = new BookDaoImpl();
+		List<Book> bookStatement = bd.viewBookStatementByKeywords(keywords);
+		return bookStatement;
 	}
+	@Override// 根据用户id查询用户未还的图书记录
+	public List<Book> viewUnreturnedBookById(int uid){
+		BookDao bd =new BookDaoImpl();
+		List<Book> unReturnedBook=bd.viewUnreturnedRecordsById(uid);
+		return unReturnedBook;
+	}
+
+	
 
 }

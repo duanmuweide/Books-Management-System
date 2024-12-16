@@ -317,8 +317,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	}
 	
 	@Override
-	public List<String> viewUnreturnedRecordsById(int user_id) {
-		// TODO Auto-generated method stub
+	public List<Book> viewUnreturnedRecordsById(int user_id) {
 		// 根据用户id查询用户未还的图书记录
 		List<String> list = new ArrayList<>();
 		Connection con = null;
@@ -343,7 +342,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public List<Book> viewBookStatementByKeywords(String bname) {
-		// TODO Auto-generated method stub
 		List<Book> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
