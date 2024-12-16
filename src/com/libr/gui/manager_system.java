@@ -176,7 +176,11 @@ public class manager_system extends JFrame {
         panel4.add(phonePanel);
 		
 		panel5.setBackground(Color.white);
-
+		JButton changeuser=new JButton("切换用户");
+		panel5.add(changeuser);
+		JButton outlogin=new JButton("退出登录");
+		panel5.add(outlogin);
+		
 		// 1. 创建页签面板
 		// 可以通过构造函数传入一个参数，表示标签的位置
 		// 顶部、底部、左、右
@@ -292,6 +296,21 @@ public class manager_system extends JFrame {
 	     phoneButton.addActionListener(new ActionListener() {
 	    	 public void actionPerformed(ActionEvent e) {
 	    		 
+	    	 }
+	     });
+//panel5
+	     changeuser.addActionListener(new ActionListener() {
+	    	 public void actionPerformed(ActionEvent e) {
+	    		 manager_system.this.dispose();
+	    		 login frame = new login();
+	    		 frame.setVisible(true);
+	    	 }
+	     });
+	     outlogin.addActionListener(new ActionListener() {
+	    	 public void actionPerformed(ActionEvent e) {
+	    		 manager_system.this.dispose();
+	    		 login frame = new login();
+	    		 frame.setVisible(true);
 	    	 }
 	     });
 
