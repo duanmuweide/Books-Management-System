@@ -319,18 +319,28 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 	@Override
 	public List<Book> viewUnreturnedRecordsById(int user_id) {
 		// 根据用户id查询用户未还的图书记录
-		List<String> list = new ArrayList<>();
+		List<Book> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select bname from book where bid in (select bid from borrow where breturntime < CURDATE() and uid=?)";
+			String sql = "select * from book where bid in (select bid from borrow where breturntime < CURDATE() and uid=?)";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1,user_id);
 			rs = ps.executeQuery();
 			while(rs.next()) { 
-				list.add(rs.getString(1));
+				Book b=new Book(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getInt(5),
+						rs.getBoolean(6),
+						rs.getString(7),
+						rs.getDate(8)
+					);
+				list.add(b);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
