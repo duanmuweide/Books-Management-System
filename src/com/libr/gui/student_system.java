@@ -65,12 +65,18 @@ public class student_system extends JFrame {
 		currentFont = btnChangeInformation.getFont();
         newFont = new Font(currentFont.getName(), currentFont.getStyle(), 25);
         btnChangeInformation.setFont(newFont);
+        
+        JButton outlogin = new JButton("退出登录");
+		currentFont = outlogin.getFont();
+        newFont = new Font(currentFont.getName(), currentFont.getStyle(), 25);
+        outlogin.setFont(newFont);
 
 		// 将按钮添加到面板中
 		buttonPanel.add(btnSearchBook);
 		buttonPanel.add(btnViewBorrowRecord);
 		buttonPanel.add(btnViewReturnRecord);
 		buttonPanel.add(btnChangeInformation);
+		buttonPanel.add(outlogin);
 
 		// 将面板添加到窗口中
 		add(buttonPanel, BorderLayout.CENTER);
@@ -110,6 +116,16 @@ public class student_system extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				student_system.this.dispose();
 				stu_returnRecord frame = new stu_returnRecord();
+				frame.setVisible(true);
+				
+			}
+		});
+		
+		outlogin.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				student_system.this.dispose();
+				login frame = new login();
 				frame.setVisible(true);
 				
 			}
