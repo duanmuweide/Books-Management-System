@@ -1,14 +1,23 @@
 package com.libr.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.regex.Pattern;
+import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import com.libr.entity.Book;
 
 public class addbook extends JFrame {
     public addbook() {
-        setTitle("注册界面");
+        setTitle("添加图书界面");
         setSize(300, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
@@ -34,8 +43,9 @@ public class addbook extends JFrame {
         addLabelAndField("名称:", nameField, gbc, y++);
         addLabelAndField("类型:", typeField, gbc, y++);
         addLabelAndField("作者:", authorField, gbc, y++);
-        addLabelAndField("位置:", locationField, gbc, y++);
         addLabelAndField("数量:", numberield, gbc, y++);
+        addLabelAndField("位置:", locationField, gbc, y++);
+        
 
         // 添加提交按钮
         JButton submitButton = new JButton("添加书籍");
@@ -56,16 +66,18 @@ public class addbook extends JFrame {
         
         submitButton.addActionListener(new ActionListener() {
 	    	 public void actionPerformed(ActionEvent e) {	 
-	    		 
-	    		 
-	    	        String id=idField.getText();
+	    	        String idString=idField.getText();
+	    	        int id= Integer.parseInt(idString);
 	    	        String name=nameField.getText();
 	    	        String type=typeField.getText();
 	    	        String author=authorField.getText();
+	    	        String numberString=numberield.getText();
+	    	        int number= Integer.parseInt(numberString);
+	    	        boolean bookStatement=false;
 	    	        String location=locationField.getText();
-	    	        String number=numberield.getText();
+	    	        Date bookTime = new Date();
 	    	        //添加到数据库中 
-	    	       
+	    	        Book newbook=new Book(id,name,type,author,number,bookStatement,location,bookTime);
 	    	 }
 	     });
         
