@@ -1,11 +1,11 @@
 package com.libr.gui;
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -14,7 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.libr.entity.Book;
-
+import com.libr.service.impl.AdminServiceImpl;
+import com.libr.util.DatabaseUtil;
 public class addbook extends JFrame {
     public addbook() {
         setTitle("添加图书界面");
@@ -77,7 +78,10 @@ public class addbook extends JFrame {
 	    	        String location=locationField.getText();
 	    	        Date bookTime = new Date();
 	    	        //添加到数据库中 
-	    	        Book newbook=new Book(id,name,type,author,number,bookStatement,location,bookTime);
+	    	        Book newbook=new Book(id,name,type,author,number,bookStatement,location,bookTime);		    	       
+	    	        Connection con=DatabaseUtil.getConnection();
+	    	        AdminServiceImpl adm=new AdminServiceImpl(con);
+	    	        adm.addBook(newbook);
 	    	 }
 	     });
         
