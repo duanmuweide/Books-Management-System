@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	// 注册
 	@Override
-	public void register(UserInfo userInfo) {
+	public void registerUser(UserInfo userInfo) {
 		UserInfoDaoImpl uidi = new UserInfoDaoImpl();
 		int result = uidi.insert(userInfo);
 		if (result > 0) {
