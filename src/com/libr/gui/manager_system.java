@@ -98,9 +98,9 @@ public class manager_system extends JFrame {
 	     JTextField textFielddeleteman = new JTextField("请输入id");
 	     JTextField textFieldfindman = new JTextField("请输入id");
 	     
-	     JButton buttonaddman = new JButton("查询借书记录");
-	     JButton buttondeleteman = new JButton("查询还书记录");
-	     JButton buttonfindman = new JButton("查看预约记录");
+	     JButton buttonaddman = new JButton("添加管理员");
+	     JButton buttondeleteman = new JButton("删除管理员");
+	     JButton buttonfindman = new JButton("查询管理员");
 	     
 	       
 	     panel3.add(textFieldaddman);
@@ -199,7 +199,7 @@ public class manager_system extends JFrame {
 		// 2. 将页签面板添加到窗体中
 		this.add(tabbedPane);
 				
-		this.setSize(400,300);
+		this.setSize(500,400);
 		this.setLocationRelativeTo(null);
 		
 //panel1	

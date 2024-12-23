@@ -85,7 +85,7 @@ public class student_system extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				student_system.this.dispose();
-				personal_information frame = new personal_information();
+				personal_information frame = new personal_information(userid);
 				frame.setVisible(true);
 
 			}
@@ -95,7 +95,7 @@ public class student_system extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				student_system.this.dispose();
-				find_stu frame = new find_stu();
+				find_stu frame = new find_stu(userid);
 				frame.setVisible(true);
 				
 			}

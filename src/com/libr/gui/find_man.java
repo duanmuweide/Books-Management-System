@@ -108,8 +108,9 @@ public class find_man extends JFrame {
 				List<Book> bookname = adm.searchBookByName(bookName);
 				List<Book> authorname = user.serachBookByWriter(authorName);
 				List<Book> bookdate = adm.searchBookByDate(date);
-
+				
 				//如何将按不同方式进行查询的书进行合并,得到最后的数组
+				
 				List<Book> finalbook;
 				if(id==-1) {
 					finalbook = bookname.stream()
