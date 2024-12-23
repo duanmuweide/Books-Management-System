@@ -105,7 +105,7 @@ public class student_system extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				student_system.this.dispose();
-				stu_borrowRecord frame = new stu_borrowRecord();
+				stu_borrowRecord frame = new stu_borrowRecord("");
 				frame.setVisible(true);
 				
 			}
