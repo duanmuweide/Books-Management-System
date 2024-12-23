@@ -125,12 +125,15 @@ public class student_system extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				student_system.this.dispose();
-				login frame = new login();
+				Login frame = new Login();
 				frame.setVisible(true);
 				
 			}
 		});
 
+	}
+
+	public student_system() {
 	}
 
 	public static void main(String[] args) {

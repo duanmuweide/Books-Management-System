@@ -302,14 +302,14 @@ public class manager_system extends JFrame {
 	     changeuser.addActionListener(new ActionListener() {
 	    	 public void actionPerformed(ActionEvent e) {
 	    		 manager_system.this.dispose();
-	    		 login frame = new login();
+	    		 Login frame = new Login();
 	    		 frame.setVisible(true);
 	    	 }
 	     });
 	     outlogin.addActionListener(new ActionListener() {
 	    	 public void actionPerformed(ActionEvent e) {
 	    		 manager_system.this.dispose();
-	    		 login frame = new login();
+	    		 Login frame = new Login();
 	    		 frame.setVisible(true);
 	    	 }
 	     });
