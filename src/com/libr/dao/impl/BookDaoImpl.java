@@ -69,6 +69,11 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		} finally {
 			DatabaseUtil.close(null, ps, con);
 		}
+		if (rows == 0) {
+			System.out.println("更新失败！！！");
+		} else {
+			System.out.println("更新成功~~~~~~~");
+		}
 		return rows;
 	}
 
@@ -87,6 +92,11 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 			ex.printStackTrace();
 		} finally {
 			DatabaseUtil.close(null, ps, con);
+		}
+		if (rows == 0) {
+			System.out.println("删除失败！！！");
+		} else {
+			System.out.println("删除成功~~~~~~~");
 		}
 		return rows;
 	}

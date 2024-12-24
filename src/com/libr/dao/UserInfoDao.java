@@ -18,7 +18,7 @@ public interface UserInfoDao extends BaseDao {
 	
 	List<UserInfo> getAllByKeyword(String keyword);
 	
-	int getLastUserID();//获取数据库中最后一条学号的信息
+	int getLastUserID();
 	//获取密码
 	String getPassword(int id);
 }

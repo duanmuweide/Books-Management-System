@@ -76,6 +76,11 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 		} finally {
 			DatabaseUtil.close(null, ps, con);
 		}
+		if (rows == 0) {
+			System.out.println("更新失败！！！");
+		} else {
+			System.out.println("更新成功~~~~~~~");
+		}
 		return rows;
 	}
 
@@ -95,6 +100,11 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 			ex.printStackTrace();
 		} finally {
 			DatabaseUtil.close(null, ps, con);
+		}
+		if (rows == 0) {
+			System.out.println("删除失败！！！");
+		} else {
+			System.out.println("删除成功~~~~~~~");
 		}
 		return rows;
 	}
@@ -200,5 +210,27 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 			DatabaseUtil.close(null, ps, con);
 		}
 		return passwd;
+	}
+
+	@Override
+	public int getLastUserID() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int uid = -1; 
+		try {
+			con = DatabaseUtil.getConnection();
+			String sql = "select uid from user_info limit 1";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if (rs.next()) { 
+				uid = rs.getInt(1);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			DatabaseUtil.close(null, ps, con);
+		}
+		return uid;
 	}
 }
