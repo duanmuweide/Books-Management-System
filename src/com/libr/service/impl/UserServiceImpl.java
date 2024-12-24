@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	// 注册
 	@Override
-	public void register(UserInfo userInfo) {
+	public void registerUser(UserInfo userInfo) {
 		UserInfoDaoImpl uidi = new UserInfoDaoImpl();
 		int result = uidi.insert(userInfo);
 		if (result > 0) {
@@ -39,17 +39,6 @@ public class UserServiceImpl implements UserService {
 		} else {
 			System.out.println("注册失败！");
 		}
-	}
-
-	// 登录
-	@Override
-	public void loginIn(int userId, String password) {
-		UserInfoDaoImpl uidi = new UserInfoDaoImpl();
-		UserInfo userInfo = uidi.getOneById(userId);
-		if (userInfo != null && userInfo.getUserPassword().equals(password)) {
-			System.out.println("登录成功！");
-		}
-		System.out.println("登录失败！用户名或密码错误。");
 	}
 
 	// 根据作者寻找书

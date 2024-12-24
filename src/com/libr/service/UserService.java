@@ -9,10 +9,8 @@ import com.libr.entity.UserInfo;
 //UserService接口： 声明用户相关的业务功能
 public interface UserService {
 	// 注册
-	public void register(UserInfo userInfo);
+	public void registerUser(UserInfo userInfo);
 
-	// 登录
-	public void loginIn(int userId, String password);
 
 	// 通过id修改密码
 	public void changePassword(int userId,String userPassword);

@@ -19,7 +19,7 @@ import com.libr.util.DatabaseUtil;
 public class addbook extends JFrame {
     public addbook() {
         setTitle("添加图书界面");
-        setSize(300, 400);
+        setSize(300, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
