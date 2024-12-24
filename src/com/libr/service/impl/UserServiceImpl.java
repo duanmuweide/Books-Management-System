@@ -41,17 +41,6 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	// 登录
-	@Override
-	public void loginIn(int userId, String password) {
-		UserInfoDaoImpl uidi = new UserInfoDaoImpl();
-		UserInfo userInfo = uidi.getOneById(userId);
-		if (userInfo != null && userInfo.getUserPassword().equals(password)) {
-			System.out.println("登录成功！");
-		}
-		System.out.println("登录失败！用户名或密码错误。");
-	}
-
 	// 根据作者寻找书
 	@Override
 	public List<Book> serachBookByWriter(String bookWriterName) {
