@@ -23,7 +23,9 @@ public class AdminServiceImpl implements AdminService {
 	// 构造函数，传入数据库连接对象
 	public AdminServiceImpl(Connection connection) {
 		this.BookDao = new BookDaoImpl();
+		
 	}
+	
 
 	// 修改管理员密码根据id
 	@Override
@@ -81,8 +83,10 @@ public class AdminServiceImpl implements AdminService {
 	// 添加新图书
 	@Override
 	public void addBook(Book book) {
+		System.out.println(book);
 		BookDao.insertBook(book);
 	}
+	
 
 	// 修改图书信息
 	@Override

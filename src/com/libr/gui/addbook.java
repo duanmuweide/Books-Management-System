@@ -76,7 +76,9 @@ public class addbook extends JFrame {
 	    	        int number= Integer.parseInt(numberString);
 	    	        boolean bookStatement=false;
 	    	        String location=locationField.getText();
-	    	        Date bookTime = new Date();
+	    	        Date bookTime =new Date();
+	    	        
+	    	        
 	    	        //添加到数据库中 
 	    	        Book newbook=new Book(id,name,type,author,number,bookStatement,location,bookTime);		    	       
 	    	        Connection con=DatabaseUtil.getConnection();
