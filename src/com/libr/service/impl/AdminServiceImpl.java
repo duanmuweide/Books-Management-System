@@ -23,9 +23,8 @@ public class AdminServiceImpl implements AdminService {
 	// 构造函数，传入数据库连接对象
 	public AdminServiceImpl(Connection connection) {
 		this.BookDao = new BookDaoImpl();
-		
+
 	}
-	
 
 	// 修改管理员密码根据id
 	@Override
@@ -43,41 +42,10 @@ public class AdminServiceImpl implements AdminService {
 
 	// 添加管理员
 	@Override
-	public void addAdmin() {
+	public void addAdmin(UserInfo newAdmin) {
 		// 创建一个新的管理员对象
-		UserInfo newAdmin = new UserInfo();
-		// 输入名称
-		System.out.print("请输入管理员名称：");
-		@SuppressWarnings("resource") // 不知道为什么警告所以暂时表示默许
-		Scanner scan = new Scanner(System.in);
-		String newname = scan.nextLine();
-		newAdmin.setUserName(newname);
-		// 输入密码
-		boolean sign = false;
-		while (!sign) {
-
-			System.out.print("请输入密码：");
-			String newPassWd1 = scan.nextLine();
-			System.out.print("请再次输入密码：");
-			String newPassWd2 = scan.nextLine();
-			if (newPassWd1.equals(newPassWd2)) {
-				newAdmin.setUserPassword(newPassWd1);
-				sign = true;
-			} else {
-				System.out.println("密码不统一，请重新输入");
-			}
-		}
-		newAdmin.setUserAdmin(true);
-
-		// 使用UserInfoDaoImpl来插入管理员
-		try {
-			UserInfoDaoImpl userInfoDaoImpl = new UserInfoDaoImpl();
-			userInfoDaoImpl.insert(newAdmin);
-			System.out.println("管理员添加成功！");
-		} catch (Exception e) {
-			System.out.println("管理员添加失败！");
-			e.printStackTrace();
-		}
+		UserInfoDaoImpl userInfoDaoImpl = new UserInfoDaoImpl();
+		userInfoDaoImpl.insert(newAdmin);
 	}
 
 	// 添加新图书
@@ -86,7 +54,6 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println(book);
 		BookDao.insertBook(book);
 	}
-	
 
 	// 修改图书信息
 	@Override
@@ -148,39 +115,39 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 
-	@Override//借书记录
+	@Override // 借书记录
 	public List<Borrow> serachBorrowRecordById(int userId) {
 		BorrowDao bd = new BorrowDaoImpl();
 		List<Borrow> borrowRecords = bd.viewReturnRecordsById(userId);
 		return borrowRecords;
 	}
 
-	@Override//还书记录
+	@Override // 还书记录
 	public List<Borrow> serachReturnRecordById(int userId) {
 		BorrowDao bd = new BorrowDaoImpl();
 		List<Borrow> returnRecords = bd.viewReturnRecordsById(userId);
 		return returnRecords;
 	}
-	
+
 	@Override // 根据图书id查询图书的在馆的数量，位置
 	public List<Book> viewBookStatementByid(int bid) {
 		BookDao bd = new BookDaoImpl();
 		List<Book> bookStatement = bd.viewBookStatement(bid);
 		return bookStatement;
 	}
-	@Override// 根据关键词查询图书的在馆的数量，位置
+
+	@Override // 根据关键词查询图书的在馆的数量，位置
 	public List<Book> viewBookStatementBykeywords(String keywords) {
 		BookDao bd = new BookDaoImpl();
 		List<Book> bookStatement = bd.viewBookStatementByKeywords(keywords);
 		return bookStatement;
 	}
-	@Override// 根据用户id查询用户未还的图书记录
-	public List<Book> viewUnreturnedBookById(int uid){
-		BookDao bd =new BookDaoImpl();
-		List<Book> unReturnedBook=bd.viewUnreturnedRecordsById(uid);
+
+	@Override // 根据用户id查询用户未还的图书记录
+	public List<Book> viewUnreturnedBookById(int uid) {
+		BookDao bd = new BookDaoImpl();
+		List<Book> unReturnedBook = bd.viewUnreturnedRecordsById(uid);
 		return unReturnedBook;
 	}
-
-	
 
 }

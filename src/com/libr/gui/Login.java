@@ -92,7 +92,7 @@ class Login extends JFrame {
 						setContentPane(managerSystem); // 切换管理员
 						revalidate();
 					} else {
-						student_system studentSystem = new student_system();
+						student_system studentSystem = new student_system("");
 						setContentPane(studentSystem); // 切换学生
 						revalidate();
 					}

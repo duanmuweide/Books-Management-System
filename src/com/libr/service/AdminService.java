@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.libr.entity.Book;
 import com.libr.entity.Borrow;
+import com.libr.entity.UserInfo;
 
 //AdminService接口： 声明产品相关的业务功能
 public interface AdminService {
@@ -12,7 +13,7 @@ public interface AdminService {
 	public void changePassword(int userId, String newPassword);
 
 	// 添加其他管理员账户
-	public void addAdmin();
+	public void addAdmin(UserInfo newAdmin);
 
 	// 添加新图书
 	public void addBook(Book book);

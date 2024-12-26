@@ -77,6 +77,7 @@ public class Register extends JFrame {
 		int y = 2;
 		addLabelAndField("*用户名:", userNameField, gbc, y++, mainPanel);
 		addLabelAndField("*密码:", userPasswordField, gbc, y++, mainPanel);
+		userPasswordField.setEchoChar('*');
 		addLabelAndField("密保问题:", userQuestionField, gbc, y++, mainPanel);
 		addLabelAndField("密保答案:", userAnswerField, gbc, y++, mainPanel);
 		addLabelAndComponent("性别:", userGenderField, gbc, y++, mainPanel);
