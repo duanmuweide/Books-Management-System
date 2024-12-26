@@ -65,7 +65,7 @@ public class manager_system extends JFrame {
 		container.add(panel1, BorderLayout.NORTH);
 		container.add(panel2, BorderLayout.CENTER);
 
-//		ImageIcon backgroundImage = new ImageIcon("C:\\Users\\Lenovo\\eclipse-workspace\\项目\\Books-Management-System\\src\\pictures\\back1.jpg"); // 替换为你的图片路径
+//		ImageIcon backgroundImage = new ImageIcon("src\\pictures\\back1.jpg"); // 替换为你的图片路径
 //        Image image = backgroundImage.getImage(); // 转换为Image
 //        Image newimg = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH); // 缩放图片
 //        backgroundImage = new ImageIcon(newimg); // 重新设置图片

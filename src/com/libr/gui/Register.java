@@ -40,11 +40,10 @@ public class Register extends JFrame {
 	private JTextField userAddressField;
 	private JTextField userEmailField;
 	private JTextField userMajorField;
-	private JTextField userIdField;
 
 	public Register() {
 		setTitle("用户注册界面");
-		setSize(400, 700);
+		setSize(400, 550);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 
@@ -63,23 +62,21 @@ public class Register extends JFrame {
 		mainPanel.add(titleLabel, gbc);
 
 		// 创建输入字段
-		userIdField = new JTextField(20);
-		userNameField = new JTextField(20);
-		userPasswordField = new JPasswordField(20);
-		userQuestionField = new JTextField(20);
-		userAnswerField = new JTextField(20);
+		userNameField = new JTextField(25);
+		userPasswordField = new JPasswordField(25);
+		userQuestionField = new JTextField(25);
+		userAnswerField = new JTextField(25);
 		userGenderField = new JComboBox<>(new String[] { "男", "女" });
-		userContactField = new JTextField(20);
-		userRealnameField = new JTextField(20);
-		userAddressField = new JTextField(20);
-		userEmailField = new JTextField(20);
-		userMajorField = new JTextField(20);
+		userContactField = new JTextField(25);
+		userRealnameField = new JTextField(25);
+		userAddressField = new JTextField(25);
+		userEmailField = new JTextField(25);
+		userMajorField = new JTextField(25);
 
 		// 添加输入字段到界面
 		int y = 2;
-		addLabelAndField("用户 ID:", userIdField, gbc, y++, mainPanel);
-		addLabelAndField("用户名:", userNameField, gbc, y++, mainPanel);
-		addLabelAndField("密码:", userPasswordField, gbc, y++, mainPanel);
+		addLabelAndField("*用户名:", userNameField, gbc, y++, mainPanel);
+		addLabelAndField("*密码:", userPasswordField, gbc, y++, mainPanel);
 		addLabelAndField("密保问题:", userQuestionField, gbc, y++, mainPanel);
 		addLabelAndField("密保答案:", userAnswerField, gbc, y++, mainPanel);
 		addLabelAndComponent("性别:", userGenderField, gbc, y++, mainPanel);
@@ -137,30 +134,34 @@ public class Register extends JFrame {
 				user.setUserAddress(userAddressField.getText());
 				user.setUserEmail(userEmailField.getText());
 				user.setUserMajor(userMajorField.getText());
-//				
-//				if (user.userName != null && user.getUserName().matches("^[a-zA-Z0-9]{3,20}$")) {
-//		            JOptionPane.showMessageDialog(null, "用户名必须为3到20个字母或数字组合！");
-//		            return;
-//		        }
-//		        
-//		        if (user. != null && email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
-//		            JOptionPane.showMessageDialog(null, "请输入有效的邮箱地址！");
-//		            return;
-//		        }
-//		        
-//		        if (!isValidPassword(user.getUserPassword())) {
-//		            JOptionPane.showMessageDialog(null, "密码必须至少6个字符，且包含字母和数字！");
-//		            return;
-//		        }
-//		        
-//		        if (!isValidPhoneNumber(user.getUserContact())) {
-//		            JOptionPane.showMessageDialog(null, "请输入有效的手机号！");
-//		            return;
-//		        }
+				 // 用户名验证
+		        if (user.getUserName() == null || !user.getUserName().matches("^[a-zA-Z0-9]{3,20}$")) {
+		            JOptionPane.showMessageDialog(null, "用户名必须为3到20个字母或数字组合！");
+		            return;
+		        }
+
+		        // 邮箱验证
+		        if (user.getUserEmail() == null || !user.getUserEmail().matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+		            JOptionPane.showMessageDialog(null, "请输入有效的邮箱地址！");
+		            return;
+		        }
+
+		        // 密码验证
+		        if (user.getUserPassword() == null || !user.getUserPassword().matches("^(?=.*[a-zA-Z])(?=.*\\d).{6,}$")) {
+		            JOptionPane.showMessageDialog(null, "密码必须至少6个字符，且包含字母和数字！");
+		            return;
+		        }
+
+		        // 手机号验证
+		        if (user.getUserContact() == null || !user.getUserContact().matches("^1[3-9]\\d{9}$")) {
+		            JOptionPane.showMessageDialog(null, "请输入有效的手机号！");
+		            return;
+		        }
 
 		        // 如果所有检查都通过，执行注册操作
 		        UserServiceImpl usi = new UserServiceImpl();
 		        usi.registerUser(user);
+		        JOptionPane.showMessageDialog(null, "注册成功！");
 			}
 		});
 	}
