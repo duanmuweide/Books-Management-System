@@ -88,11 +88,11 @@ class Login extends JFrame {
 				if (userId != 0 && password != null && userId == userInfo.getUserId()
 						&& userInfo.getUserPassword().equals(password)) {
 					if (userInfo.isUserAdmin()) {
-						manager_system managerSystem = new manager_system();
+						manager_system managerSystem = new manager_system(userId);
 						setContentPane(managerSystem); // 切换管理员
 						revalidate();
 					} else {
-						student_system studentSystem = new student_system("");
+						student_system studentSystem = new student_system(userId);
 						setContentPane(studentSystem); // 切换学生
 						revalidate();
 					}

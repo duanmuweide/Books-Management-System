@@ -44,7 +44,7 @@ import com.libr.util.DatabaseUtil;
 
 public class manager_system extends JFrame {
 	JPanel panel2 = new JPanel();
-	public manager_system() {
+	public manager_system(int userId) {
 		this.setSize(600, 600);
 		this.setLocationRelativeTo(null);
 		this.setTitle("管理员页面");
@@ -158,6 +158,8 @@ public class manager_system extends JFrame {
 		panel2.add(new JScrollPane(new JTextArea()));
 	}
 	
+	
+
 	private void showBorrowRecords() {
         // 创建一个新的面板用于显示借阅记录
         JPanel borrowRecordsPanel = new JPanel(new BorderLayout());
@@ -625,7 +627,7 @@ public class manager_system extends JFrame {
 	
 	
 	public static void main(String[] args) {
-		manager_system frame = new manager_system();
+		manager_system frame = new manager_system(1);
 		frame.setVisible(true);
 	}
 

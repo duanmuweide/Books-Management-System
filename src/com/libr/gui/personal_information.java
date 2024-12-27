@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 
 public class personal_information extends JFrame {
-	private String userid;
+	private int userid;
 	
 	 // 自定义的JPanel，用于绘制背景图片
     private class BackgroundImagePanel extends JPanel {
@@ -39,7 +39,7 @@ public class personal_information extends JFrame {
         }
     }
     
-    public personal_information(String userID) {
+    public personal_information(int userID) {
     	userid=userID;
     	
     	// 创建一个自定义的JPanel作为内容面板
@@ -138,7 +138,7 @@ public class personal_information extends JFrame {
     }
 
     public static void main(String[] args) {
-    	personal_information frame=new personal_information("");
+    	personal_information frame=new personal_information(1);
     	frame.setVisible(true);
     }
 }
