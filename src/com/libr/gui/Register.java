@@ -126,6 +126,7 @@ public class Register extends JFrame {
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserInfo user = new UserInfo();
+				user.setUserName(userNameField.getText());
 				user.setUserPassword(new String(userPasswordField.getPassword()));//getText不安全
 				user.setUserId(generateUserId());
 				user.setUserQuestion(userQuestionField.getText());
