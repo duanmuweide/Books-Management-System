@@ -49,16 +49,7 @@ import com.libr.util.DatabaseUtil;
 public class manager_system extends JFrame {
 	JPanel panel2 = new JPanel();
 	int managerid;
-	// 创建输入组件
-	JTextField idField = new JTextField(20);
-	JTextField nameField = new JTextField(20);
-	JTextField authorField = new JTextField(20);
-	JTextField typeField = new JTextField(20);
-	JTextField statusField = new JTextField(20);
-	JTextField locationField = new JTextField(20);
-	JTextField numberField = new JTextField(20);
-	JTextField bookTimeField = new JTextField(20);
-
+	
 	public manager_system(int id) {
 		managerid=id;
 		this.setSize(800, 600);
@@ -175,6 +166,17 @@ public class manager_system extends JFrame {
 	}
 
 	private void showBorrowRecords() {
+		// 创建输入组件
+		JTextField idField = new JTextField(20);
+		JTextField nameField = new JTextField(20);
+		JTextField authorField = new JTextField(20);
+		JTextField typeField = new JTextField(20);
+		JTextField statusField = new JTextField(20);
+		JTextField locationField = new JTextField(20);
+		JTextField numberField = new JTextField(20);
+		JTextField bookTimeField = new JTextField(20);
+
+		
 		// 创建一个新的面板用于显示借阅记录
 		JPanel borrowRecordsPanel = new JPanel(new BorderLayout());
 		JPanel searchbyidjp = new JPanel();
@@ -263,6 +265,17 @@ public class manager_system extends JFrame {
 	}
 
 	private void addBook() {
+		// 创建输入组件
+		JTextField idField = new JTextField(20);
+		JTextField nameField = new JTextField(20);
+		JTextField authorField = new JTextField(20);
+		JTextField typeField = new JTextField(20);
+		JTextField statusField = new JTextField(20);
+		JTextField locationField = new JTextField(20);
+		JTextField numberField = new JTextField(20);
+		JTextField bookTimeField = new JTextField(20);
+
+		
 		try {
 			Image backgroundImage;
 			backgroundImage = ImageIO.read(new File("src/pictures/back1.jpg"));
@@ -354,6 +367,16 @@ public class manager_system extends JFrame {
 	}
 
 	void changeBook() {
+		// 创建输入组件
+		JTextField idField = new JTextField(20);
+		JTextField nameField = new JTextField(20);
+		JTextField authorField = new JTextField(20);
+		JTextField typeField = new JTextField(20);
+		JTextField statusField = new JTextField(20);
+		JTextField locationField = new JTextField(20);
+		JTextField numberField = new JTextField(20);
+		JTextField bookTimeField = new JTextField(20);
+
 		try {
 			Image backgroundImage;
 			backgroundImage = ImageIO.read(new File("src/pictures/back1.jpg"));
@@ -488,6 +511,17 @@ public class manager_system extends JFrame {
 	}
 
 	void deleteBook() {
+		// 创建输入组件
+		JTextField idField = new JTextField(20);
+		JTextField nameField = new JTextField(20);
+		JTextField authorField = new JTextField(20);
+		JTextField typeField = new JTextField(20);
+		JTextField statusField = new JTextField(20);
+		JTextField locationField = new JTextField(20);
+		JTextField numberField = new JTextField(20);
+		JTextField bookTimeField = new JTextField(20);
+
+		
 		try {
 			Image backgroundImage;
 			backgroundImage = ImageIO.read(new File("src/pictures/back1.jpg"));
@@ -933,7 +967,6 @@ public class manager_system extends JFrame {
 
 	}
 
-	
 	public static void main(String[] args) {		
 		manager_system frame = new manager_system(1);
 		frame.setVisible(true);

@@ -90,7 +90,7 @@ public class addbook extends JFrame {
         returnButton.addActionListener(new ActionListener() {
 	    	 public void actionPerformed(ActionEvent e) {	 
 	    		addbook.this.dispose();
-				manager_system frame = new manager_system();
+				manager_system frame = new manager_system(1);
 				frame.setVisible(true);
 	    	 }
 	     });
