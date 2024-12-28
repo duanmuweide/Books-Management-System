@@ -84,7 +84,7 @@ public class manager_system extends JFrame {
 		// 用一维数组存储菜单
 		String menus[] = { "学生设置", "图书管理", "管理员设置", "其他设置" };
 		// 用二维数组存储菜单项
-		String menuItems[][] = { { "查询借阅记录" }, { "添加图书", "修改图书", "删除图书", "查询图书" }, { "操作管理员" },
+		String menuItems[][] = { { "查询借阅记录" }, { "添加图书", "修改图书", "删除图书", "查询图书" }, { "改变管理权限" },
 				{ "修改个人信息", "退出登录" }, };
 
 		// 1. 创建菜单栏JMenuBar
@@ -641,21 +641,22 @@ public class manager_system extends JFrame {
 
 				List<Book> bookname = adm.searchBookByName(bookName);
 				List<Book> authorname = user.serachBookByWriter(authorName);
+				
 				// 如何将按不同方式进行查询的书进行合并,得到最后的数组
-
 				List<Book> finalbook;
-				if (id == -1) {
+				if (id==-1) {
+					if(bookName.isEmpty()) {
+						finalbook=authorname;
+					}else if(authorName.isEmpty()) {
+						finalbook=bookname;
+					}else {
 					finalbook = bookname.stream()
 							.filter(book -> authorname.stream()
 									.anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))							
 							.collect(Collectors.toList());
+					}
 				} else {
-					finalbook = bookname.stream()
-							.filter(book -> authorname.stream()
-									.anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))
-							.filter(book -> bookid.stream().anyMatch(idBook -> idBook.getBookId() == book.getBookId()))
-							.collect(Collectors.toList());
-
+					finalbook = bookid;
 				}
 				// 向数组里添加数据
 				for (Book book : finalbook) {
@@ -670,6 +671,20 @@ public class manager_system extends JFrame {
 					data[i][7] = book.getBookTime();
 					i++;
 				}
+				
+//				 for (Borrow bor : listbor) {
+//                Object[] row = new Object[] {
+//                    bor.getUseId(),
+//                    bor.getBookId(),
+//                    bor.getBorrowTime(),
+//                    bor.getBookStatement() ? "未被借阅" : "已被借阅",
+//                    bor.getBorrowReturnTime(),
+//                    bor.getBookNumber(),
+//                    bor.getBorrowId()
+//                };
+//                model.addRow(row); // 添加行到模型
+//            }
+				
 
 				table.setFont(new Font("宋体", Font.PLAIN, 14));
 
@@ -701,24 +716,27 @@ public class manager_system extends JFrame {
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			gbc.insets = new Insets(5, 5, 5, 5);
-
-			
+	
+			UserInfo before = new UserInfo();
+			UserServiceImpl user = new UserServiceImpl();
+			Connection con = DatabaseUtil.getConnection();
+			AdminServiceImpl adm = new AdminServiceImpl(con);
+			before=adm.getUserInfoById(managerid);
 			
 			// 创建输入组件
-			JTextField nameField = new JTextField("nihao", 20);
-			JTextField passwordField = new JTextField("1234", 20);
-			
-			JTextField userQuestion=new JTextField(20);
-			JTextField userAnswer=new JTextField(20);
-			JTextField phonenumberField = new JTextField("111111111", 20);
-			JTextField realnameField = new JTextField("你好", 20);
+			JTextField nameField = new JTextField(before.getUserName(), 20);
+			JTextField passwordField = new JTextField(before.getUserPassword(), 20);			
+			JTextField userQuestion=new JTextField(before.getUserQuestion(),20);
+			JTextField userAnswer=new JTextField(before.getUserAnswer(),20);
+			JTextField phonenumberField = new JTextField(before.getUserContact(), 20);
+			JTextField realnameField = new JTextField(before.getUserRealname(), 20);
 			realnameField
 					.setFont(new Font(realnameField.getFont().getName(), Font.BOLD, realnameField.getFont().getSize()));
-			JTextField addressField = new JTextField("中国", 20);
+			JTextField addressField = new JTextField(before.getUserAddress(), 20);
 			addressField
 					.setFont(new Font(addressField.getFont().getName(), Font.BOLD, addressField.getFont().getSize()));
-			JTextField emailField = new JTextField("1234@qq.com", 20);
-			JTextField majorField = new JTextField("软件外包", 20);
+			JTextField emailField = new JTextField(before.getUserEmail(), 20);
+			JTextField majorField = new JTextField(before.getUserMajor(), 20);
 			majorField.setFont(new Font(majorField.getFont().getName(), Font.BOLD, majorField.getFont().getSize()));
 
 			// 添加组件到主面板
@@ -744,9 +762,12 @@ public class manager_system extends JFrame {
 			changeButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					UserInfo ui = new UserInfo();
-					UserServiceImpl user = new UserServiceImpl();
-					ui = user.changeUserInfo(ui);
+					UserInfo after = new UserInfo(managerid,nameField.getText(),
+					passwordField.getText(),userQuestion.getText(),userAnswer.getText(),
+					true,before.getUserGender(),phonenumberField.getText(),
+					realnameField.getText(),addressField.getText(),emailField.getText(),
+					majorField.getText()) ;
+					user.changeUserInfo(after);
 				}
 			});
 
@@ -847,29 +868,14 @@ public class manager_system extends JFrame {
 				// 获取输入的id
 				String idString = idField.getText();
 				int id = Integer.parseInt(idString);
-
-				// 添加管理员 这里改为根据id获取用户对象后把用户对象更新
+				UserInfo before = new UserInfo();
+				UserServiceImpl user = new UserServiceImpl();
 				Connection con = DatabaseUtil.getConnection();
 				AdminServiceImpl adm = new AdminServiceImpl(con);
-				adm.addAdmin();
-
+				before=adm.getUserInfoById(id);
+				adm.addAdmin(before);
 			}
 		});
-		
-		deleteManagerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// 获取输入的id
-				String idString = idField.getText();
-				int id = Integer.parseInt(idString);
-				
-				// 添加管理员
-				Connection con = DatabaseUtil.getConnection();
-				AdminServiceImpl adm = new AdminServiceImpl(con);
-				adm.addAdmin();
-				
-			}
-		});
-		
 		
 		} catch (Throwable e1) {
 			// TODO Auto-generated catch block
@@ -913,14 +919,14 @@ public class manager_system extends JFrame {
 				// 显示学生信息
 				Connection con = DatabaseUtil.getConnection();
 				AdminServiceImpl adm = new AdminServiceImpl(con);
-
-				// UserInfo man=adm.searchManager(id);
-//	    	    	nameField.setText(man.getBookName());
-//	    	    	genderField.setText(man.getBookType());
-//	    	    	contactField.setText(man.getBookWriterName());
-//	    	    	realnameField.setText(man.getBookWriterName());
-//	    	    	emailField.setText(man.getBookPosition());
-//	    	    	majorField.setText(man.getBookTime().toString());
+			
+				 UserInfo man=adm.getUserInfoById(id);
+				 	nameField.setText(man.getUserName());
+	    	    	genderField.setText(man.getUserGender());
+	    	    	contactField.setText(man.getUserContact());
+	    	    	realnameField.setText(man.getUserRealname());
+	    	    	emailField.setText(man.getUserEmail());
+	    	    	majorField.setText(man.getUserMajor());
 
 			}
 		});
