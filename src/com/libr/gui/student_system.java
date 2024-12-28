@@ -180,22 +180,18 @@ public class student_system extends JFrame {
 			}
 			List<Book> bookname = adm.searchBookByName(bookName);
 			List<Book> authorname = user.serachBookByWriter(authorName);
-			List<Book> bookdate = adm.searchBookByDate(date);
+			
 
 			// 合并查询结果
 			List<Book> finalbook;
 			if (id == -1) {
 				finalbook = bookname.stream().filter(
-						book -> authorname.stream().anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))
-						.filter(book -> bookdate.stream()
-								.anyMatch(dateBook -> dateBook.getBookId() == book.getBookId()))
+						book -> authorname.stream().anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))						
 						.collect(Collectors.toList());
 			} else {
 				finalbook = bookname.stream()
 						.filter(book -> authorname.stream()
 								.anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))
-						.filter(book -> bookdate.stream()
-								.anyMatch(dateBook -> dateBook.getBookId() == book.getBookId()))
 						.filter(book -> bookid.stream().anyMatch(idBook -> idBook.getBookId() == book.getBookId()))
 						.collect(Collectors.toList());
 			}

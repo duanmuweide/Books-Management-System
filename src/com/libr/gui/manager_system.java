@@ -717,11 +717,11 @@ public class manager_system extends JFrame {
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			gbc.insets = new Insets(5, 5, 5, 5);
 	
-			UserInfo before = new UserInfo();
+			
 			UserServiceImpl user = new UserServiceImpl();
 			Connection con = DatabaseUtil.getConnection();
 			AdminServiceImpl adm = new AdminServiceImpl(con);
-			before=adm.getUserInfoById(managerid);
+			final UserInfo before =adm.getUserInfoById(managerid);
 			
 			// 创建输入组件
 			JTextField nameField = new JTextField(before.getUserName(), 20);

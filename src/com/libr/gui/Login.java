@@ -87,14 +87,14 @@ class Login extends JFrame {
 				UserInfo userInfo = uidi.getOneById(userId);
 				if (userId != 0 && password != null && userId == userInfo.getUserId()
 						&& userInfo.getUserPassword().equals(password)) {
-					if (userInfo.isUserAdmin()) {
+					if (userInfo.getUserAdmin()) {
+						Login.this.dispose();
 						manager_system managerSystem = new manager_system(userId);
-						setContentPane(managerSystem); // 切换管理员
-						revalidate();
+						managerSystem.setVisible(true);
 					} else {
+						Login.this.dispose();
 						student_system studentSystem = new student_system(userId);
-						setContentPane(studentSystem); // 切换学生
-						revalidate();
+						studentSystem.setVisible(true);
 					}
 				} else {
 					// 如果登录失败，可以提示用户
@@ -106,10 +106,10 @@ class Login extends JFrame {
 		btn_register.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Login.this.dispose();
 				Register register = new Register();
-				setContentPane(register); // 切换注册页面
-				revalidate();
-				System.out.println("打开注册页面...");
+			    register.setVisible(true);
+				
 			}
 		});
 	}
