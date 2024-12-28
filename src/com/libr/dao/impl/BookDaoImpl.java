@@ -53,16 +53,16 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		int rows = 0; // 定义一个变量，存储受影响的行数
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "update book set bid=?,bname=?,btype=?,bwname=?,bnumber=?,bstatement=?,bposition=?,btime=?";
+			String sql = "update book set bname=?,btype=?,bwname=?,bnumber=?,bstatement=?,bposition=?,btime=? where bid=?";
 			ps = con.prepareStatement(sql);
-			ps.setObject(1,p.getBookId());
-			ps.setObject(2,p.getBookName());
-			ps.setObject(3,p.getBookType());
-			ps.setObject(4,p.getBookWriterName());
-			ps.setObject(5,p.getBookNumber());
-			ps.setObject(6,p.getBookStatement());
-			ps.setObject(7,p.getBookPosition());
-			ps.setObject(8,p.getBookTime());
+			ps.setObject(1,p.getBookName());
+			ps.setObject(2,p.getBookType());
+			ps.setObject(3,p.getBookWriterName());
+			ps.setObject(4,p.getBookNumber());
+			ps.setObject(5,p.getBookStatement());
+			ps.setObject(6,p.getBookPosition());
+			ps.setObject(7,p.getBookTime());
+			ps.setObject(8,p.getBookId());
 			rows = ps.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();

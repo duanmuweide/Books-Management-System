@@ -407,7 +407,9 @@ public class manager_system extends JFrame {
 					String type = typeField.getText();
 					String number1 = numberField.getText();
 					int number = Integer.parseInt(number1);
-
+					
+					
+					
 					if (!Pattern.matches("[1-9][0-9]*", idString)) {
 						JOptionPane.showMessageDialog(manager_system.this, "id不能为空");
 					} else if (!Pattern.matches("([\\u4E00-\\u9FA5]|[a-zA-Z]|[0-9])+", name)) {
@@ -535,26 +537,13 @@ public class manager_system extends JFrame {
 			// 删除按钮监听事件
 			deleteButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					// 获取输入的id
-					String idString = idField.getText();
-					int id = Integer.parseInt(idString);
-
-					// 在数据库中查找并显示书的相关信息
-					Connection con = DatabaseUtil.getConnection();
-					AdminServiceImpl adm = new AdminServiceImpl(con);
-					Book book = adm.searchBookById(id);
-					// 显示信息
-					nameField.setText(book.getBookName());
-					typeField.setText(book.getBookType());
-					authorField.setText(book.getBookWriterName());
-					numberField.setText(String.valueOf(book.getBookNumber()));
-					locationField.setText(book.getBookPosition());
-					if (book.getBookStatement() == false) {
-						statusField.setText("已被借阅");
-					} else {
-						statusField.setText("未被借阅");
-					}
-					bookTimeField.setText(book.getBookTime().toString());
+					
+					 String idString=idField.getText();
+					 int id=Integer.parseInt(idString);
+		    	     //执行删除操作
+					 Connection con=DatabaseUtil.getConnection();
+		    	     AdminServiceImpl adm=new AdminServiceImpl(con);
+		    	     adm.deleteBook(id);
 
 				}
 			});
@@ -659,31 +648,31 @@ public class manager_system extends JFrame {
 					finalbook = bookid;
 				}
 				// 向数组里添加数据
-				for (Book book : finalbook) {
-					int i = 0;
-					data[i][0] = book.getBookId();
-					data[i][1] = book.getBookName();
-					data[i][2] = book.getBookWriterName();
-					data[i][3] = book.getBookType();
-					data[i][4] = book.getBookStatement();
-					data[i][5] = book.getBookPosition();
-					data[i][6] = book.getBookNumber();
-					data[i][7] = book.getBookTime();
-					i++;
-				}
+//				for (Book book : finalbook) {
+//					int i = 0;
+//					data[i][0] = book.getBookId();
+//					data[i][1] = book.getBookName();
+//					data[i][2] = book.getBookWriterName();
+//					data[i][3] = book.getBookType();
+//					data[i][4] = book.getBookStatement();
+//					data[i][5] = book.getBookPosition();
+//					data[i][6] = book.getBookNumber();
+//					data[i][7] = book.getBookTime();
+//					i++;
+//				}
 				
-//				 for (Borrow bor : listbor) {
-//                Object[] row = new Object[] {
-//                    bor.getUseId(),
-//                    bor.getBookId(),
-//                    bor.getBorrowTime(),
-//                    bor.getBookStatement() ? "未被借阅" : "已被借阅",
-//                    bor.getBorrowReturnTime(),
-//                    bor.getBookNumber(),
-//                    bor.getBorrowId()
-//                };
-//                model.addRow(row); // 添加行到模型
-//            }
+				 for (Borrow bor : listbor) {
+                Object[] row = new Object[] {
+                    bor.getUseId(),
+                    bor.getBookId(),
+                    bor.getBorrowTime(),
+                    bor.getBookStatement() ? "未被借阅" : "已被借阅",
+                    bor.getBorrowReturnTime(),
+                    bor.getBookNumber(),
+                    bor.getBorrowId()
+                };
+                model.addRow(row); // 添加行到模型
+            }
 				
 
 				table.setFont(new Font("宋体", Font.PLAIN, 14));
@@ -930,7 +919,6 @@ public class manager_system extends JFrame {
 
 			}
 		});
-
 	}
 
 	
