@@ -108,17 +108,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	// 根据日期搜索图书
-	@Override
-	public List<Book> searchBookByDate(Date date) {
-		List<Book> books = BookDao.getOneByDate(date);
-		if (books.isEmpty()) {
-			System.out.println("没有找到日期为 " + date + " 的图书");
-			return Collections.emptyList();
-		} else {
-			books.forEach(book -> System.out.println("找到图书: " + book));
-			return books;
-		}
-	}
+//	@Override
+//	public List<Book> searchBookByDate(Date date) {
+//		List<Book> books = BookDao.getOneByDate(date);
+//		if (books.isEmpty()) {
+//			System.out.println("没有找到日期为 " + date + " 的图书");
+//			return Collections.emptyList();
+//		} else {
+//			books.forEach(book -> System.out.println("找到图书: " + book));
+//			return books;
+//		}
+//	}
 
 	@Override // 借书记录
 	public List<Borrow> serachBorrowRecordById(int userId) {

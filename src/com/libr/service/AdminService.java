@@ -31,7 +31,7 @@ public interface AdminService {
 	public List<Book> searchBookByName(String keyword);
 
 	// 根据日期搜寻
-	public List<Book> searchBookByDate(Date date);
+//	public List<Book> searchBookByDate(Date date);
 
 	// 通过id查询借阅记录
 	public List<Borrow> serachBorrowRecordById(int userId);

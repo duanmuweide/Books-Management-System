@@ -13,7 +13,7 @@ public interface BorrowDao extends BaseDao {
 	
 	int deleteById(int id);
 	
-	Borrow getOneById(int id);
+	List<Borrow> getOneById(int id);
 	
 	List<Borrow> getAll();
 	

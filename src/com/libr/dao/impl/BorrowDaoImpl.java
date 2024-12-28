@@ -101,28 +101,36 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 	}
 
 	@Override
-	public Borrow getOneById(int id) {
+	public List<Borrow> getOneById(int id) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Borrow borrow = null; 
+		List<Borrow> list = new ArrayList<>();
 		try {
 			con = DatabaseUtil.getConnection();
 			String sql = "select * from borrow where uid=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1,id);
 			rs = ps.executeQuery();
-			if (rs.next()) { 
-				borrow = new Borrow(rs.getInt(1),rs.getInt(2),rs.getDate(3),
-						rs.getBoolean(4),rs.getDate(5),rs.getInt(6),rs.getInt(7));
+			while (rs.next()) { 
+				Borrow b=new Borrow(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getDate(3),
+						rs.getBoolean(4),
+						rs.getDate(5),
+						rs.getInt(6),
+						rs.getInt(7)
+					);
+				list.add(b);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			DatabaseUtil.close(null, ps, con);
 		}
-		return borrow;
+		return list;
 	}
 
 	@Override
@@ -201,7 +209,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from borrow where bid in (select bid from book where bname=?)";
+			String sql = "select * from borrow where bid in (select bid from book where bname LIKE CONCAT('%', ?, '%'))";
 			ps = con.prepareStatement(sql);
 			ps.setString(1,keyword);
 			rs = ps.executeQuery();
@@ -233,7 +241,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from borrow where uid=?";
+			String sql = "select * from borrow where uid=? AND borrowtime IS NOT NULL";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1,user_id);
 			rs = ps.executeQuery();
