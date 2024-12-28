@@ -43,7 +43,7 @@ public class UserInfo {
 	public void setUserAnswer(String userAnswer) {
 		this.userAnswer = userAnswer;
 	}
-	public boolean isUserAdmin() {
+	public boolean getUserAdmin() {
 		return userAdmin;
 	}
 	public void setUserAdmin(boolean userAdmin) {

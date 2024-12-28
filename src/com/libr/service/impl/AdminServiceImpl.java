@@ -43,9 +43,14 @@ public class AdminServiceImpl implements AdminService {
 	// 添加管理员
 	@Override
 	public void addAdmin(UserInfo newAdmin) {
-		// 创建一个新的管理员对象
+		// 更新管理员状态(true->false,flase->true)
 		UserInfoDaoImpl userInfoDaoImpl = new UserInfoDaoImpl();
-		userInfoDaoImpl.insert(newAdmin);
+		if(newAdmin.getUserAdmin()) {
+			newAdmin.setUserAdmin(false);
+		}else {
+			newAdmin.setUserAdmin(true);
+		}
+		userInfoDaoImpl.update(newAdmin);
 	}
 
 	// 添加新图书
@@ -148,6 +153,14 @@ public class AdminServiceImpl implements AdminService {
 		BookDao bd = new BookDaoImpl();
 		List<Book> unReturnedBook = bd.viewUnreturnedRecordsById(uid);
 		return unReturnedBook;
+	}
+
+	@Override//更具用户id返回一个用户对象
+	public UserInfo getUserInfoById(int userID) {
+		UserInfoDaoImpl uidi = new UserInfoDaoImpl();
+		UserInfo user=new UserInfo();
+		user=uidi.getOneById(userID);
+		return user;
 	}
 
 }

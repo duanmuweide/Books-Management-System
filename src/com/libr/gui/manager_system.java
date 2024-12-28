@@ -848,7 +848,7 @@ public class manager_system extends JFrame {
 				String idString = idField.getText();
 				int id = Integer.parseInt(idString);
 
-				// 添加管理员
+				// 添加管理员 这里改为根据id获取用户对象后把用户对象更新
 				Connection con = DatabaseUtil.getConnection();
 				AdminServiceImpl adm = new AdminServiceImpl(con);
 				adm.addAdmin();

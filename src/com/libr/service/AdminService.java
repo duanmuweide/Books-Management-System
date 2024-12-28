@@ -47,5 +47,7 @@ public interface AdminService {
 
 	// 根据图书名称关键字查询图书的借阅情况
 	public List<Book> viewBookStatementBykeywords(String keywords);
-
+	
+	// 根据用户ID获取用户对象
+	public UserInfo getUserInfoById(int userID);
 }
