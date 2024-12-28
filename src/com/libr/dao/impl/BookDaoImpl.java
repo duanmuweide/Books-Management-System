@@ -103,6 +103,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
 	@Override
 	public Book getOneById(int id) {
+		//这是bid
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -165,7 +166,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from book where bname=?";
+			String sql = "select * from book where bname like CONCAT('%', ?, '%')";
 			ps = con.prepareStatement(sql);
 			ps.setString(1,keyword);
 			rs = ps.executeQuery();
@@ -190,38 +191,38 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		return list;
 	}
 
-	@Override
-	public List<Book> getOneByDate(Date d) {
-		List<Book> list = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			con = DatabaseUtil.getConnection();
-			String sql = "select * from book where btime=?";
-			ps = con.prepareStatement(sql);
-			ps.setObject(1,d);
-			rs = ps.executeQuery();
-			while(rs.next()) { 
-				Book b=new Book(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getString(4),
-						rs.getInt(5),
-						rs.getBoolean(6),
-						rs.getString(7),
-						rs.getDate(8)
-					);
-			list.add(b);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			DatabaseUtil.close(null, ps, con);
-		}
-		return list;
-	}
+//	@Override
+//	public List<Book> getOneByDate(Date d) {
+//		List<Book> list = new ArrayList<>();
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		try {
+//			con = DatabaseUtil.getConnection();
+//			String sql = "select * from book where btime=?";
+//			ps = con.prepareStatement(sql);
+//			ps.setObject(1,d);
+//			rs = ps.executeQuery();
+//			while(rs.next()) { 
+//				Book b=new Book(
+//						rs.getInt(1),
+//						rs.getString(2),
+//						rs.getString(3),
+//						rs.getString(4),
+//						rs.getInt(5),
+//						rs.getBoolean(6),
+//						rs.getString(7),
+//						rs.getDate(8)
+//					);
+//			list.add(b);
+//			}
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		} finally {
+//			DatabaseUtil.close(null, ps, con);
+//		}
+//		return list;
+//	}
 
 	@Override
 	public List<Book> getOneByBookName(String name)
@@ -232,7 +233,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from book where bname=?";
+			String sql = "select * from book where bname like CONCAT('%', ?, '%')";
 			ps = con.prepareStatement(sql);
 			ps.setString(1,name);
 			rs = ps.executeQuery();
@@ -266,9 +267,9 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from book where bwname=?";
+			String sql = "select * from book where bwname like CONCAT('%', ?, '%')";
 			ps = con.prepareStatement(sql);
-			ps.setString(1,d);
+			ps.setString(1,d); 
 			rs = ps.executeQuery();
 			while(rs.next()) { 
 				Book b=new Book(
@@ -368,7 +369,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 		ResultSet rs = null;
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from book where bname like '%?%' ";
+			String sql = "SELECT * FROM book WHERE bname LIKE CONCAT('%', ?, '%')";
 			ps = con.prepareStatement(sql);
 			ps.setString(1,bname);
 			rs = ps.executeQuery();

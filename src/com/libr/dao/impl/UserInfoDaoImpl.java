@@ -172,7 +172,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 		UserInfo user_info = null; 
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select * from user_info where uid=?";
+			String sql = "select * from user_info where uname LIKE CONCAT('%', ?, '%')";
 			ps = con.prepareStatement(sql);
 			ps.setString(1,keyword);
 			rs = ps.executeQuery();

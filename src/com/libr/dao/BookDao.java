@@ -15,7 +15,7 @@ public interface BookDao extends BaseDao {
 	
 	Book getOneById(int id);
 	
-	List<Book> getOneByDate(Date day);
+//	List<Book> getOneByDate(Date day);
 	
 	List<Book> getOneByAuthor(String name);
 	
