@@ -89,8 +89,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserInfo changeUserInfo(UserInfo user) {
-		UserInfo ui = new UserInfo();
-		// 写更改个人信息的详细操作
-		return ui;
+		UserInfoDaoImpl uidi = new UserInfoDaoImpl();
+		uidi.update(user);
+		return user;
 	}
 }
