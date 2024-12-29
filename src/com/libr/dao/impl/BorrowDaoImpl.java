@@ -52,7 +52,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao{
 		int rows = 0; // 定义一个变量，存储受影响的行数
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "update borrow set uid=?,bid=?,borrowtime=?,bstatement=?,breturntime=?,bnumber=?,borrowid=?";
+			String sql = "update borrow set uid=?,bid=?,borrowtime=?,bstatement=?,breturntime=?,bnumber=? where borrowid=?";
 			ps = con.prepareStatement(sql);
 			ps.setObject(1,p.getUseId());
 			ps.setObject(2,p.getBookId());

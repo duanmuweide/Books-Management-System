@@ -173,7 +173,7 @@ public class Register extends JFrame {
 		if (uid <= 0) {
 			return 2023000001;
 		} else
-			return uid;
+			return uid+1;
 	}
 
 	private void addLabelAndField(String labelText, JTextField field, GridBagConstraints gbc, int y, JPanel panel) {

@@ -56,20 +56,20 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 		int rows = 0; // 定义一个变量，存储受影响的行数
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "update user_info set uid=?,uname=?,upwd=?,uquestion=?,uanswer=?,uadmin=?,ugender=?,ucontact=?,urealname=?,uaddress=?,uemail=?,major=?";
+			String sql = "update user_info set uname=?,upwd=?,uquestion=?,uanswer=?,uadmin=?,ugender=?,ucontact=?,urealname=?,uaddress=?,uemail=?,major=? where uid=?";
 			ps = con.prepareStatement(sql);
-			ps.setObject(1,p.getUserId());
-			ps.setObject(2,p.getUserName());
-			ps.setObject(3,p.getUserPassword());
-			ps.setObject(4,p.getUserQuestion());
-			ps.setObject(5,p.getUserAnswer());
-			ps.setObject(6,p.getUserAdmin());
-			ps.setObject(7,p.getUserGender());
-			ps.setObject(8,p.getUserContact());
-			ps.setObject(9,p.getUserRealname());
-			ps.setObject(10,p.getUserAddress());
-			ps.setObject(11,p.getUserEmail());
-			ps.setObject(12,p.getUserMajor());
+			ps.setObject(1,p.getUserName());
+			ps.setObject(2,p.getUserPassword());
+			ps.setObject(3,p.getUserQuestion());
+			ps.setObject(4,p.getUserAnswer());
+			ps.setObject(5,p.getUserAdmin());
+			ps.setObject(6,p.getUserGender());
+			ps.setObject(7,p.getUserContact());
+			ps.setObject(8,p.getUserRealname());
+			ps.setObject(9,p.getUserAddress());
+			ps.setObject(10,p.getUserEmail());
+			ps.setObject(11,p.getUserMajor());
+			ps.setObject(12,p.getUserId());
 			rows = ps.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -220,7 +220,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao{
 		int uid = -1; 
 		try {
 			con = DatabaseUtil.getConnection();
-			String sql = "select uid from user_info limit 1";
+			String sql = "select max(uid) from user_info";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if (rs.next()) { 
