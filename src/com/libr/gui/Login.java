@@ -33,7 +33,7 @@ class Login extends JFrame {
 		container.setBackground(Color.white);
 		container.setLayout(null);// 使用绝对布局
 
-		JLabel label1 = new JLabel("用户名： ");
+		JLabel label1 = new JLabel("用户ID： ");
 		label1.setFont(new Font("楷体", Font.PLAIN, 18));
 
 		JLabel label2 = new JLabel("密码： ");
