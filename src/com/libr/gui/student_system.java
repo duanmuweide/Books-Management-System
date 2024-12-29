@@ -5,18 +5,30 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,6 +37,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.libr.entity.Book;
 import com.libr.entity.Borrow;
+import com.libr.entity.UserInfo;
+import com.libr.gui.manager_system.BackgroundImagePanel;
 import com.libr.service.impl.AdminServiceImpl;
 import com.libr.service.impl.UserServiceImpl;
 import com.libr.util.DatabaseUtil;
@@ -102,32 +116,32 @@ public class student_system extends JFrame {
 
 	// 显示搜索页面
 	private void showSearchBookPanel() {
-		mainPanel.removeAll();
+		JTextField bookNameField;
+		JTextField authorNameField;
+		JTextField IDField;
+		JTable table;
+		DefaultTableModel model;
+
+		// 创建JPanel
+		JPanel panel = new JPanel(new BorderLayout());
 
 		// 创建输入字段
-		JTextField bookNameField = new JTextField(30);
-		JTextField authorNameField = new JTextField(30);
-		JTextField IDField = new JTextField(30);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		JFormattedTextField formattedTextField = new JFormattedTextField(dateFormat);
-		formattedTextField.setColumns(30);
+		bookNameField = new JTextField(15);
+		authorNameField = new JTextField(15);
+		IDField = new JTextField(15);
 
 		// 创建按钮
 		JButton searchButton = new JButton("查找");
 
 		// 创建表格
 		String[] columnNames = { "编号", "书名", "作者名", "类型", "借阅状态", "位置", "数量", "入库时间" };
-		DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
-		JTable table = new JTable(model);
-		table.setFont(new Font("楷体", Font.PLAIN, 20)); // 设置字体
-		table.setRowHeight(30);
-		table.setBackground(new Color(245, 245, 245));
-		JScrollPane scrollPane = new JScrollPane(table);
-		// 表头
+		model = new DefaultTableModel(columnNames, 0); // 初始化为空模型
+		table = new JTable(model);
 		table.getTableHeader().setFont(new Font("楷体", Font.BOLD, 16)); // 表头字体
 		table.getTableHeader().setBackground(new Color(85, 130, 200)); // 表头背景色
 		table.getTableHeader().setForeground(Color.WHITE); // 表头字体颜色
-		table.getTableHeader().setReorderingAllowed(false);
+		JScrollPane scrollPane = new JScrollPane(table);
+
 		// north部分：输入图书名称和作者名称
 		JPanel northPanel = new JPanel();
 		northPanel.setPreferredSize(new Dimension(0, 55));
@@ -147,134 +161,265 @@ public class student_system extends JFrame {
 		northPanel.add(numberLabel);
 		northPanel.add(IDField);
 
-		JLabel timeLabel = new JLabel("入库时间:");
-		timeLabel.setFont(new Font("楷体", Font.BOLD, 20));
-		northPanel.add(timeLabel);
-		northPanel.add(formattedTextField);
 		northPanel.add(searchButton);
 
 		// 为查找按钮添加事件监听器
-		searchButton.addActionListener(e -> {
-			String bookName = bookNameField.getText();
-			String authorName = authorNameField.getText();
-			String idString = IDField.getText();
-			int id;
-			if (idString.isEmpty()) {
-				id = -1; // 如果ID为空，则设置为无效值
-			} else {
-				id = Integer.parseInt(idString);
-			}
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 清除现有数据
+				model.setRowCount(0);
 
-			Date date = (Date) formattedTextField.getValue();
-			Connection con = DatabaseUtil.getConnection();
-			AdminServiceImpl adm = new AdminServiceImpl(con);
-			UserServiceImpl user = new UserServiceImpl();
+				String bookName = bookNameField.getText();
+				String authorName = authorNameField.getText();
+				String idString = IDField.getText();
+				int id = -1;
+				if (!idString.isEmpty()) {
+					try {
+						id = Integer.parseInt(idString);
+					} catch (NumberFormatException ex) {
+						JOptionPane.showMessageDialog(panel, "请输入有效的图书编号！", "错误", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
 
-			// 获取查询到的书
-			List<Book> bookid = new ArrayList<>();
-			if (id != -1) {
-				Book bookID = adm.searchBookById(id);
-				if (bookID != null) {
-					bookid.add(bookID);
+				Connection con = null;
+				try {
+					con = DatabaseUtil.getConnection();
+					AdminServiceImpl adm = new AdminServiceImpl(con);
+					UserServiceImpl user = new UserServiceImpl();
+
+					List<Book> finalbook = new ArrayList<>();
+					Set<Integer> addedBookIds = new HashSet<>(); // 用于存储已添加书籍的ID
+
+					if (id != -1) {
+						Book bookID = adm.searchBookById(id);
+						if (bookID != null && !addedBookIds.contains(bookID.getBookId())) {
+							finalbook.add(bookID);
+							addedBookIds.add(bookID.getBookId()); // 添加书籍ID到集合中
+						}
+					} else {
+						if (!bookName.isEmpty()) {
+							List<Book> booksByName = adm.searchBookByName(bookName);
+							for (Book book : booksByName) {
+								if (!addedBookIds.contains(book.getBookId())) {
+									finalbook.add(book);
+									addedBookIds.add(book.getBookId()); // 添加书籍ID到集合中
+								}
+							}
+						}
+						if (!authorName.isEmpty()) {
+							List<Book> booksByAuthor = user.serachBookByWriter(authorName);
+							for (Book book : booksByAuthor) {
+								if (!addedBookIds.contains(book.getBookId())) {
+									finalbook.add(book);
+									addedBookIds.add(book.getBookId()); // 添加书籍ID到集合中
+								}
+							}
+						}
+						// 如果同时输入了书名和作者名，进行交集处理
+						if (!bookName.isEmpty() && !authorName.isEmpty()) {
+							finalbook = finalbook.stream()
+									.filter(book -> book.getBookName().contains(bookName)
+											&& book.getBookWriterName().contains(authorName))
+									.collect(Collectors.toList());
+							// 更新addedBookIds集合，以反映交集后的结果
+							addedBookIds.clear();
+							for (Book book : finalbook) {
+								addedBookIds.add(book.getBookId());
+							}
+						}
+					}
+
+					
+					if (finalbook.size() == 0) {
+						JOptionPane.showMessageDialog(null, "查询不到相关书籍", "提示", JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+					// 向表格模型添加数据
+					for (Book bor : finalbook) {
+						Object[] row = new Object[] { bor.getBookId(), bor.getBookName(), bor.getBookWriterName(),
+								bor.getBookType(), bor.getBookStatement() ? "未被借阅" : "已被借阅", bor.getBookPosition(),
+								bor.getBookNumber(), bor.getBookTime() };
+						model.addRow(row); // 添加行到模型
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(panel, "查询失败！", "错误", JOptionPane.ERROR_MESSAGE);
+				} finally {
+					DatabaseUtil.close(null, null, con);
 				}
 			}
-			List<Book> bookname = adm.searchBookByName(bookName);
-			List<Book> authorname = user.serachBookByWriter(authorName);
-			
-
-			// 合并查询结果
-			List<Book> finalbook;
-			if (id == -1) {
-				finalbook = bookname.stream().filter(
-						book -> authorname.stream().anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))						
-						.collect(Collectors.toList());
-			} else {
-				finalbook = bookname.stream()
-						.filter(book -> authorname.stream()
-								.anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))
-						.filter(book -> bookid.stream().anyMatch(idBook -> idBook.getBookId() == book.getBookId()))
-						.collect(Collectors.toList());
-			}
-
-			// 更新表格数据
-			model.setRowCount(0); // 清空现有数据
-			for (Book book : finalbook) {
-				model.addRow(new Object[] { book.getBookId(), book.getBookName(), book.getBookWriterName(),
-						book.getBookType(), book.getBookStatement(), book.getBookPosition(), book.getBookNumber(),
-						book.getBookTime() });
-			}
-
-			table.setFont(new Font("宋体", Font.PLAIN, 14));
-			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		});
 
-		// 将组件添加到主面板
-		JPanel panel = new JPanel(new BorderLayout());
+		// 将组件添加到JPanel
 		panel.add(northPanel, BorderLayout.NORTH);
 		panel.add(scrollPane, BorderLayout.CENTER);
+
+		// 更新中心区域的内容
+		mainPanel.removeAll();
 		mainPanel.add(panel, BorderLayout.CENTER);
 		mainPanel.revalidate(); // 重新验证布局
 		mainPanel.repaint(); // 重绘组件
 	}
 
-	 // 显示借书记录界面
-    private void showBorrowRecordPanel(int id) {
-        mainPanel.removeAll();
+	// 显示借书记录界面
+	private void showBorrowRecordPanel(int id) {
+		// 创建一个新的面板用于显示借阅记录
+		JPanel borrowRecordsPanel = new JPanel(new BorderLayout());
+		String[] columnNames = { "学生学号", "图书编号", "借阅时间", "图书状态", "归还时间", "数量", "借阅编号" };
+		Object[][] record = null;
 
-        JLabel borrowRecordLabel = new JLabel("查看借书记录界面", JLabel.CENTER);
-        borrowRecordLabel.setFont(new Font("楷体", Font.BOLD, 28));
+		DefaultTableModel model = new DefaultTableModel(record, columnNames);
+		JTable table = new JTable(model);
+		JScrollPane scrollPane = new JScrollPane(table);
 
-        // 创建表格列名
-        String[] columnNames = { "学生学号", "图书编号", "借阅时间", "图书状态", "归还时间", "数量", "借阅编号" };
+		table.getTableHeader().setFont(new Font("楷体", Font.BOLD, 16)); // 表头字体
+		table.getTableHeader().setBackground(new Color(85, 130, 200)); // 表头背景色
+		table.getTableHeader().setForeground(Color.WHITE); // 表头字体颜色
+		table.setFont(new Font("宋体", Font.PLAIN, 14));
 
-        // 获取借书记录数据
-        UserServiceImpl userService = new UserServiceImpl();
-        List<Borrow> borrowList = userService.serachBorrowRecordById(id); // 根据学生ID获取借书记录
+		// 创建滚动面板，包含表格
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		borrowRecordsPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // 将数据填充到二维数组中
-        Object[][] record = new Object[borrowList.size()][columnNames.length];
-        for (int i = 0; i < borrowList.size(); i++) {
-            Borrow bor = borrowList.get(i);
-            record[i][0] = bor.getUseId();
-            record[i][1] = bor.getBookId();
-            record[i][2] = bor.getBorrowTime();
-            record[i][3] = bor.getBookStatement() ? "未被借阅" : "已被借阅";
-            record[i][4] = bor.getBorrowReturnTime();
-            record[i][5] = bor.getBookNumber();
-            record[i][6] = bor.getBorrowId();
-        }
+		// 更新中心区域的内容
+		mainPanel.removeAll();
+		mainPanel.add(borrowRecordsPanel, BorderLayout.CENTER);
+		mainPanel.revalidate(); // 重新验证布局
+		mainPanel.repaint(); // 重绘组件
 
-        // 创建表格模型和表格
-        DefaultTableModel model = new DefaultTableModel(record, columnNames);
-        JTable table = new JTable(model);
+		UserServiceImpl user = new UserServiceImpl();
+		List<Borrow> listbor = user.serachBorrowRecordById(id);
+		if (listbor.size() == 0) {
+			JOptionPane.showMessageDialog(null, "查询不到相关记录", "提示", JOptionPane.INFORMATION_MESSAGE);
+		}
+		// 清除现有数据
+		model.setRowCount(0);
+		for (Borrow bor : listbor) {
+			Object[] row = new Object[] { bor.getUseId(), bor.getBookId(), bor.getBorrowTime(),
+					bor.getBookStatement() ? "未被借阅" : "已被借阅", bor.getBorrowReturnTime(), bor.getBookNumber(),
+					bor.getBorrowId() };
+			model.addRow(row); // 添加行到模型
+		}
 
-        // 设置表格样式
-        table.setFont(new Font("宋体", Font.PLAIN, 14));
-        table.setRowHeight(25);
-        table.getTableHeader().setFont(new Font("宋体", Font.BOLD, 16));
-        table.getTableHeader().setBackground(new Color(192, 192, 192));
+	}
 
-        // 创建滚动面板，包含表格
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	// 自定义的JPanel类，用于绘制背景图片
+		class BackgroundImagePanel extends JPanel {
+			private Image backgroundImage;
 
-        // 添加到主面板
-        mainPanel.add(borrowRecordLabel, BorderLayout.NORTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
-        mainPanel.revalidate();
-        mainPanel.repaint();
-    }
+			public BackgroundImagePanel(Image backgroundImage) {
+				this.backgroundImage = backgroundImage;
+			}
 
-    // 显示修改个人信息界面
-    private void showChangeInfoPanel() {
-        mainPanel.removeAll();
-        JLabel changeInfoLabel = new JLabel("修改个人信息界面", JLabel.CENTER);
-        changeInfoLabel.setFont(new Font("楷体", Font.BOLD, 28));
-        mainPanel.add(changeInfoLabel, BorderLayout.CENTER);
-        mainPanel.revalidate();
-        mainPanel.repaint();
-    }
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+			}
+		}
+	
+	// 显示修改个人信息界面
+	private void showChangeInfoPanel() {
+
+		try {
+			Image backgroundImage;
+			backgroundImage = ImageIO.read(new File("src/pictures/back1.jpg"));
+			BackgroundImagePanel mainPanel1 = new BackgroundImagePanel(backgroundImage);
+			mainPanel1.setLayout(new GridBagLayout());
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.insets = new Insets(5, 5, 5, 5);
+	
+			
+			UserServiceImpl user = new UserServiceImpl();
+			Connection con = DatabaseUtil.getConnection();
+			AdminServiceImpl adm = new AdminServiceImpl(con);
+			final UserInfo before =adm.getUserInfoById(id);
+			
+			// 创建输入组件
+			JTextField nameField = new JTextField(before.getUserName(), 20);
+			JTextField passwordField = new JTextField(before.getUserPassword(), 20);			
+			JTextField userQuestion=new JTextField(before.getUserQuestion(),20);
+			JTextField userAnswer=new JTextField(before.getUserAnswer(),20);
+			JTextField phonenumberField = new JTextField(before.getUserContact(), 20);
+			JTextField realnameField = new JTextField(before.getUserRealname(), 20);
+			realnameField
+					.setFont(new Font(realnameField.getFont().getName(), Font.BOLD, realnameField.getFont().getSize()));
+			JTextField addressField = new JTextField(before.getUserAddress(), 20);
+			addressField
+					.setFont(new Font(addressField.getFont().getName(), Font.BOLD, addressField.getFont().getSize()));
+			JTextField emailField = new JTextField(before.getUserEmail(), 20);
+			JTextField majorField = new JTextField(before.getUserMajor(), 20);
+			majorField.setFont(new Font(majorField.getFont().getName(), Font.BOLD, majorField.getFont().getSize()));
+
+			// 添加组件到主面板
+			int y = 0;
+			addLabelAndFieldWithButton("名称:", nameField, gbc, y++, mainPanel1);
+			addLabelAndFieldWithButton("密码:", passwordField, gbc, y++, mainPanel1);
+			addLabelAndFieldWithButton("密保:", userQuestion, gbc, y++, mainPanel1);
+			addLabelAndFieldWithButton("答案:", userAnswer, gbc, y++, mainPanel1);			
+			addLabelAndFieldWithButton("电话:", phonenumberField, gbc, y++, mainPanel1);
+			addLabelAndFieldWithButton("真名:", realnameField, gbc, y++, mainPanel1);
+			addLabelAndFieldWithButton("地址:", addressField, gbc, y++, mainPanel1);
+			addLabelAndFieldWithButton("邮箱:", emailField, gbc, y++, mainPanel1);
+			addLabelAndFieldWithButton("专业:", majorField, gbc, y++, mainPanel1);
+
+			// 添加修改按钮
+			JButton changeButton = new JButton("修改");
+			changeButton.setFont(new Font("楷书", Font.BOLD, 15));
+			gbc.gridx = 2;
+			gbc.gridy = y++;
+			gbc.anchor = GridBagConstraints.CENTER; // 设置按钮居中
+			mainPanel1.add(changeButton, gbc); // 添加到主面板
+
+			changeButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					UserInfo after = new UserInfo(id,nameField.getText(),
+					passwordField.getText(),userQuestion.getText(),userAnswer.getText(),
+					false,before.getUserGender(),phonenumberField.getText(),
+					realnameField.getText(),addressField.getText(),emailField.getText(),
+					majorField.getText()) ;
+					user.changeUserInfo(after);
+					JOptionPane.showMessageDialog(null, "修改成功！");
+				}
+			});
+
+			// 更新中心区域的内容
+			mainPanel.removeAll();
+			mainPanel.add(mainPanel1, BorderLayout.CENTER);
+			mainPanel.revalidate(); // 重新验证布局
+			mainPanel.repaint(); // 重绘组件
+
+		} catch (Throwable e1) {
+			// TODO Auto-generated catch block
+			 System.err.println("修改失败");
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	private void addLabelAndFieldWithButton(String labelText, JTextField field, GridBagConstraints gbc, int y,
+			JPanel mainPanel) {
+		gbc.gridx = 0;
+		gbc.gridy = y;
+		gbc.gridwidth = 1;
+		JLabel label = new JLabel(labelText);
+		label.setFont(new Font("宋体", Font.BOLD, 20));
+		mainPanel.add(label, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = y;
+		gbc.gridwidth = 2;
+		field.setFont(new Font("宋体", Font.BOLD, 18));
+		field.setPreferredSize(new Dimension(200, 35));
+		field.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY, 1),
+		BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		mainPanel.add(field, gbc);
+	}
+	
 
 	// 退出登录
 	private void logout() {

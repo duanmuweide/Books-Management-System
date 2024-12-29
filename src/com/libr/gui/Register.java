@@ -43,7 +43,7 @@ public class Register extends JFrame {
 
 	public Register() {
 		setTitle("用户注册界面");
-		setSize(400, 550);
+		setSize(400, 570);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 
@@ -101,6 +101,20 @@ public class Register extends JFrame {
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.CENTER;
 		mainPanel.add(submitButton, gbc);
+		
+		JButton returnButton = new JButton("返回");
+		returnButton.setFont(new Font("楷体", Font.BOLD, 16));
+		returnButton.setFocusPainted(false);
+		returnButton.setBackground(new java.awt.Color(72, 118, 255));
+		returnButton.setForeground(java.awt.Color.WHITE);
+		returnButton.setOpaque(true);
+		returnButton.setBorderPainted(false);
+		
+		gbc.gridy = y++;
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(returnButton, gbc);
 
 		// 设置滚动条
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
@@ -166,6 +180,16 @@ public class Register extends JFrame {
 		        JOptionPane.showMessageDialog(null, "注册成功！");
 			}
 		});
+		
+		
+		returnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Register.this.dispose();
+				Login frame=new Login();
+				frame.setVisible(true);
+			}
+		});
+		
 	}
 
 	public int generateUserId() {

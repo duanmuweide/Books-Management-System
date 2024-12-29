@@ -14,10 +14,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,6 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -49,7 +49,6 @@ import com.libr.util.DatabaseUtil;
 public class manager_system extends JFrame {
 	JPanel panel2 = new JPanel();
 	int managerid;
-	
 	public manager_system(int id) {
 		managerid=id;
 		this.setSize(800, 600);
@@ -121,7 +120,7 @@ public class manager_system extends JFrame {
 				case "查询图书":
 					findBook();
 					break;
-				case "操作管理员":
+				case "改变管理权限":
 					changeManager();
 					break;
 				case "修改个人信息":
@@ -166,17 +165,7 @@ public class manager_system extends JFrame {
 	}
 
 	private void showBorrowRecords() {
-		// 创建输入组件
-		JTextField idField = new JTextField(20);
-		JTextField nameField = new JTextField(20);
-		JTextField authorField = new JTextField(20);
-		JTextField typeField = new JTextField(20);
-		JTextField statusField = new JTextField(20);
-		JTextField locationField = new JTextField(20);
-		JTextField numberField = new JTextField(20);
-		JTextField bookTimeField = new JTextField(20);
-
-		
+		try {
 		// 创建一个新的面板用于显示借阅记录
 		JPanel borrowRecordsPanel = new JPanel(new BorderLayout());
 		JPanel searchbyidjp = new JPanel();
@@ -216,36 +205,30 @@ public class manager_system extends JFrame {
 		searchbyidjb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserServiceImpl user = new UserServiceImpl();				
-				List<Borrow> listbor = user.serachBorrowRecordById(managerid);
+				List<Borrow> listbor = user.serachBorrowRecordById(Integer.parseInt(searchbyidjt.getText()));
 				// 清除现有数据
-	            model.setRowCount(0);
-				int i=0;
-				for (Borrow bor : listbor) {
-					record[i][0] = bor.getUseId();
-					record[i][1] = bor.getBookId();
-					record[i][2] = bor.getBorrowTime();
-					record[i][3] = bor.getBookStatement() ? "未被借阅" : "已被借阅";
-					record[i][4] = bor.getBorrowReturnTime();
-					record[i][5] = bor.getBookNumber();
-					record[i][6] = bor.getBorrowId();
-					i++;
-				}
-				
-//				 for (Borrow bor : listbor) {
-//		                Object[] row = new Object[] {
-//		                    bor.getUseId(),
-//		                    bor.getBookId(),
-//		                    bor.getBorrowTime(),
-//		                    bor.getBookStatement() ? "未被借阅" : "已被借阅",
-//		                    bor.getBorrowReturnTime(),
-//		                    bor.getBookNumber(),
-//		                    bor.getBorrowId()
-//		                };
-//		                model.addRow(row); // 添加行到模型
-//		            }
-				
+	            model.setRowCount(0);		
+	            if (listbor.size() == 0) {
+	    			JOptionPane.showMessageDialog(null, "查询不到相关记录", "提示", JOptionPane.INFORMATION_MESSAGE);
+	    		}
+				 for (Borrow bor : listbor) {
+		                Object[] row = new Object[] {
+		                    bor.getUseId(),
+		                    bor.getBookId(),
+		                    bor.getBorrowTime(),
+		                    bor.getBookStatement() ? "未被借阅" : "已被借阅",
+		                    bor.getBorrowReturnTime(),
+		                    bor.getBookNumber(),
+		                    bor.getBorrowId()
+		                };
+		                model.addRow(row); // 添加行到模型
+		            }
 			}
 		});
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 
@@ -328,7 +311,7 @@ public class manager_system extends JFrame {
 					String author = authorField.getText();
 					String numberString = numberField.getText();
 					int number = Integer.parseInt(numberString);
-					boolean bookStatement = false;
+					boolean bookStatement = true;
 					String location = locationField.getText();
 					Date bookTime = new Date();
 					// 添加到数据库中
@@ -336,12 +319,13 @@ public class manager_system extends JFrame {
 					Connection con = DatabaseUtil.getConnection();
 					AdminServiceImpl adm = new AdminServiceImpl(con);
 					adm.addBook(newbook);
-
+					JOptionPane.showMessageDialog(null, "添加成功");
 				}
 			});
 
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "添加失败");
 			e1.printStackTrace();
 		}
 
@@ -439,13 +423,14 @@ public class manager_system extends JFrame {
 						JOptionPane.showMessageDialog(manager_system.this, "名称只能是汉字字母数字，且不能为空");
 					} else if (!Pattern.matches("[\u4E00-\\u9FA5]+", type)) {
 						JOptionPane.showMessageDialog(manager_system.this, "类型不能为空");
-					} else if (!Pattern.matches("[1-9]+", number1)) {
+					} else if (!Pattern.matches("^[1-9][0-9]*", number1)) {
 						JOptionPane.showMessageDialog(manager_system.this, "数量不能为空");
 					} else {
 						// 执行修改操作
 						Connection con = DatabaseUtil.getConnection();
 						AdminServiceImpl adm = new AdminServiceImpl(con);
 						adm.modifyBook(id, name, type, number);
+						JOptionPane.showMessageDialog(null, "修改成功");
 					}
 
 				}
@@ -453,6 +438,7 @@ public class manager_system extends JFrame {
 
 		} catch (Throwable e1) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "修改失败");
 			e1.printStackTrace();
 		}
 
@@ -578,156 +564,171 @@ public class manager_system extends JFrame {
 					 Connection con=DatabaseUtil.getConnection();
 		    	     AdminServiceImpl adm=new AdminServiceImpl(con);
 		    	     adm.deleteBook(id);
+		    	     JOptionPane.showMessageDialog(null, "删除成功");
 
 				}
 			});
 
 		} catch (Throwable e1) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "删除失败");
 			e1.printStackTrace();
 		}
 
 	}
 
 	private void findBook() {
-
 		JTextField bookNameField;
 		JTextField authorNameField;
 		JTextField IDField;
 		JTable table;
 		DefaultTableModel model;
 
-		// 创建JPanel
-		JPanel panel = new JPanel(new BorderLayout());
+	    // 创建JPanel
+	    JPanel panel = new JPanel(new BorderLayout());
 
-		// 创建输入字段
-		bookNameField = new JTextField(15);
-		authorNameField = new JTextField(15);
-		IDField = new JTextField(15);
+	    // 创建输入字段
+	    bookNameField = new JTextField(15);
+	    authorNameField = new JTextField(15);
+	    IDField = new JTextField(15);
 
-		// 创建按钮
-		JButton searchButton = new JButton("查找");
+	    // 创建按钮
+	    JButton searchButton = new JButton("查找");
 
-		// 创建表格
-		String[] columnNames = { "编号", "书名", "作者名", "类型", "借阅状态", "位置", "数量", "入库时间" };
-		Object[][] data = new Object[0][0]; // 初始化为空数组
-		model = new DefaultTableModel(data, columnNames);
-		table = new JTable(model);
-		table.getTableHeader().setFont(new Font("楷体", Font.BOLD, 16)); // 表头字体
-		table.getTableHeader().setBackground(new Color(85, 130, 200)); // 表头背景色
-		table.getTableHeader().setForeground(Color.WHITE); // 表头字体颜色
-		JScrollPane scrollPane = new JScrollPane(table);
+	    // 创建表格
+	    String[] columnNames = { "编号", "书名", "作者名", "类型", "借阅状态", "位置", "数量", "入库时间" };
+	    model = new DefaultTableModel(columnNames, 0); // 初始化为空模型
+	    table = new JTable(model);
+	    table.getTableHeader().setFont(new Font("楷体", Font.BOLD, 16)); // 表头字体
+	    table.getTableHeader().setBackground(new Color(85, 130, 200)); // 表头背景色
+	    table.getTableHeader().setForeground(Color.WHITE); // 表头字体颜色
+	    JScrollPane scrollPane = new JScrollPane(table);
 
-		// north部分：输入图书名称和作者名称
-		JPanel northPanel = new JPanel();
-		northPanel.setPreferredSize(new Dimension(0, 55));
+	    // north部分：输入图书名称和作者名称
+	    JPanel northPanel = new JPanel();
+	    northPanel.setPreferredSize(new Dimension(0, 55));
 
-		JLabel bookLabel = new JLabel("图书名称:");
-		bookLabel.setFont(new Font("楷体", Font.BOLD, 20));
-		northPanel.add(bookLabel);
-		northPanel.add(bookNameField);
+	    JLabel bookLabel = new JLabel("图书名称:");
+	    bookLabel.setFont(new Font("楷体", Font.BOLD, 20));
+	    northPanel.add(bookLabel);
+	    northPanel.add(bookNameField);
 
-		JLabel writerLabel = new JLabel("作者名称:");
-		writerLabel.setFont(new Font("楷体", Font.BOLD, 20));
-		northPanel.add(writerLabel);
-		northPanel.add(authorNameField);
+	    JLabel writerLabel = new JLabel("作者名称:");
+	    writerLabel.setFont(new Font("楷体", Font.BOLD, 20));
+	    northPanel.add(writerLabel);
+	    northPanel.add(authorNameField);
 
-		JLabel numberLabel = new JLabel("图书编号:");
-		numberLabel.setFont(new Font("楷体", Font.BOLD, 20));
-		northPanel.add(numberLabel);
-		northPanel.add(IDField);
+	    JLabel numberLabel = new JLabel("图书编号:");
+	    numberLabel.setFont(new Font("楷体", Font.BOLD, 20));
+	    northPanel.add(numberLabel);
+	    northPanel.add(IDField);
 
-		northPanel.add(searchButton);
+	    northPanel.add(searchButton);
 
-		// 为查找按钮添加事件监听器
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	    // 为查找按钮添加事件监听器
+	    searchButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            // 清除现有数据
+	            model.setRowCount(0);
 
-				String bookName = bookNameField.getText();
-				String authorName = authorNameField.getText();
-				String idString = IDField.getText();
-				int id;
-				if (idString.isEmpty()) {
-					id = -1;
-				} else {
-					id = Integer.parseInt(idString);
-				}
+	            String bookName = bookNameField.getText();
+	            String authorName = authorNameField.getText();
+	            String idString = IDField.getText();
+	            int id = -1;
+	            if (!idString.isEmpty()) {
+	                try {
+	                    id = Integer.parseInt(idString);
+	                } catch (NumberFormatException ex) {
+	                    JOptionPane.showMessageDialog(panel, "请输入有效的图书编号！", "错误", JOptionPane.ERROR_MESSAGE);
+	                    return;
+	                }
+	            }
 
-				Connection con = DatabaseUtil.getConnection();
-				AdminServiceImpl adm = new AdminServiceImpl(con);
-				UserServiceImpl user = new UserServiceImpl();
+	            Connection con = null;
+	            try {
+	                con = DatabaseUtil.getConnection();
+	                AdminServiceImpl adm = new AdminServiceImpl(con);
+	                UserServiceImpl user = new UserServiceImpl();
 
-				// 获取查询到的书
-				List<Book> bookid = new ArrayList<>();
-				Book bookID = adm.searchBookById(id);
-				bookid.add(bookID);
+	                List<Book> finalbook = new ArrayList<>();
+	                Set<Integer> addedBookIds = new HashSet<>(); // 用于存储已添加书籍的ID
 
-				List<Book> bookname = adm.searchBookByName(bookName);
-				List<Book> authorname = user.serachBookByWriter(authorName);
-				
-				// 如何将按不同方式进行查询的书进行合并,得到最后的数组
-				List<Book> finalbook;
-				if (id==-1) {
-					if(bookName.isEmpty()) {
-						finalbook=authorname;
-					}else if(authorName.isEmpty()) {
-						finalbook=bookname;
-					}else {
-					finalbook = bookname.stream()
-							.filter(book -> authorname.stream()
-									.anyMatch(authorBook -> authorBook.getBookId() == book.getBookId()))							
-							.collect(Collectors.toList());
+	                if (id != -1) {
+	                    Book bookID = adm.searchBookById(id);
+	                    if (bookID != null && !addedBookIds.contains(bookID.getBookId())) {
+	                        finalbook.add(bookID);
+	                        addedBookIds.add(bookID.getBookId()); // 添加书籍ID到集合中
+	                    }
+	                } else {
+	                    if (!bookName.isEmpty()) {
+	                        List<Book> booksByName = adm.searchBookByName(bookName);
+	                        for (Book book : booksByName) {
+	                            if (!addedBookIds.contains(book.getBookId())) {
+	                                finalbook.add(book);
+	                                addedBookIds.add(book.getBookId()); // 添加书籍ID到集合中
+	                            }
+	                        }
+	                    }
+	                    if (!authorName.isEmpty()) {
+	                        List<Book> booksByAuthor = user.serachBookByWriter(authorName);
+	                        for (Book book : booksByAuthor) {
+	                            if (!addedBookIds.contains(book.getBookId())) {
+	                                finalbook.add(book);
+	                                addedBookIds.add(book.getBookId()); // 添加书籍ID到集合中
+	                            }
+	                        }
+	                    }
+	                    // 如果同时输入了书名和作者名，进行交集处理
+	                    if (!bookName.isEmpty() && !authorName.isEmpty()) {
+	                        finalbook = finalbook.stream()
+	                                .filter(book -> book.getBookName().contains(bookName) && book.getBookWriterName().contains(authorName))
+	                                .collect(Collectors.toList());
+	                        // 更新addedBookIds集合，以反映交集后的结果
+	                        addedBookIds.clear();
+	                        for (Book book : finalbook) {
+	                            addedBookIds.add(book.getBookId());
+	                        }
+	                    }
+	                }
+
+	                if (finalbook.size() == 0) {
+						JOptionPane.showMessageDialog(null, "查询不到相关书籍", "提示", JOptionPane.INFORMATION_MESSAGE);
 					}
-				} else {
-					finalbook = bookid;
-				}
-				// 向数组里添加数据
-//				for (Book book : finalbook) {
-//					int i = 0;
-//					data[i][0] = book.getBookId();
-//					data[i][1] = book.getBookName();
-//					data[i][2] = book.getBookWriterName();
-//					data[i][3] = book.getBookType();
-//					data[i][4] = book.getBookStatement();
-//					data[i][5] = book.getBookPosition();
-//					data[i][6] = book.getBookNumber();
-//					data[i][7] = book.getBookTime();
-//					i++;
-//				}
-				
-				 for (Borrow bor : listbor) {
-                Object[] row = new Object[] {
-                    bor.getUseId(),
-                    bor.getBookId(),
-                    bor.getBorrowTime(),
-                    bor.getBookStatement() ? "未被借阅" : "已被借阅",
-                    bor.getBorrowReturnTime(),
-                    bor.getBookNumber(),
-                    bor.getBorrowId()
-                };
-                model.addRow(row); // 添加行到模型
-            }
-				
+	                
+	                // 向表格模型添加数据
+	                for (Book bor : finalbook) {
+	                    Object[] row = new Object[] {
+	                        bor.getBookId(),
+	                        bor.getBookName(),
+	                        bor.getBookWriterName(),
+	                        bor.getBookType(),
+	                        bor.getBookStatement() ? "未被借阅" : "已被借阅",
+	                        bor.getBookPosition(),
+	                        bor.getBookNumber(),
+	                        bor.getBookTime()
+	                    };
+	                    model.addRow(row); // 添加行到模型
+	                }
+	            } catch (Exception ex) {
+	                ex.printStackTrace();
+	                JOptionPane.showMessageDialog(panel, "查询失败！", "错误", JOptionPane.ERROR_MESSAGE);
+	            } finally {
+	                DatabaseUtil.close(null, null, con);
+	            }
+	        }
+	    });
 
-				table.setFont(new Font("宋体", Font.PLAIN, 14));
+	    // 将组件添加到JPanel
+	    panel.add(northPanel, BorderLayout.NORTH);
+	    panel.add(scrollPane, BorderLayout.CENTER);
 
-				// 创建滚动面板，包含表格
-				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-				scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-			}
-		});
-
-		// 将组件添加到JPanel
-		panel.add(northPanel, BorderLayout.NORTH);
-		panel.add(scrollPane, BorderLayout.CENTER);
-
-		// 更新中心区域的内容
-		panel2.removeAll();
-		panel2.add(panel, BorderLayout.CENTER);
-		panel2.revalidate(); // 重新验证布局
-		panel2.repaint(); // 重绘组件
-
+	    // 更新中心区域的内容
+	    panel2.removeAll();
+	    panel2.add(panel, BorderLayout.CENTER);
+	    panel2.revalidate(); // 重新验证布局
+	    panel2.repaint(); // 重绘组件
 	}
+	
 
 	private void changepersonalinformation() {
 
@@ -791,6 +792,7 @@ public class manager_system extends JFrame {
 					realnameField.getText(),addressField.getText(),emailField.getText(),
 					majorField.getText()) ;
 					user.changeUserInfo(after);
+					JOptionPane.showMessageDialog(null, "修改成功");
 				}
 			});
 
@@ -802,6 +804,7 @@ public class manager_system extends JFrame {
 
 		} catch (Throwable e1) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "修改失败");
 			e1.printStackTrace();
 		}
 
@@ -863,7 +866,7 @@ public class manager_system extends JFrame {
 		addLabelAndField("专业:", majorField, gbc, y++, mainPanel);
 
 		// 管理员按钮
-		JButton addManagerButton = new JButton("添加为管理员");
+		JButton addManagerButton = new JButton("确认改变权限");
 		addManagerButton.setFont(new Font("楷书", Font.BOLD, 15));
 		gbc.gridx = 1;
 		gbc.gridy = y++;
@@ -871,14 +874,6 @@ public class manager_system extends JFrame {
 		gbc.anchor = GridBagConstraints.CENTER; // 设置按钮居中
 		mainPanel.add(addManagerButton, gbc);
 
-		JButton deleteManagerButton = new JButton("刪除其管理员");
-		deleteManagerButton.setFont(new Font("楷书", Font.BOLD, 15));
-		gbc.gridx = 1;
-		gbc.gridy = y++;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER; // 设置按钮居中
-		mainPanel.add(deleteManagerButton, gbc);
-		
 		// 更新中心区域的内容
 		panel2.removeAll();
 		panel2.add(mainPanel, BorderLayout.CENTER);
@@ -892,16 +887,17 @@ public class manager_system extends JFrame {
 				String idString = idField.getText();
 				int id = Integer.parseInt(idString);
 				UserInfo before = new UserInfo();
-				UserServiceImpl user = new UserServiceImpl();
 				Connection con = DatabaseUtil.getConnection();
 				AdminServiceImpl adm = new AdminServiceImpl(con);
 				before=adm.getUserInfoById(id);
 				adm.addAdmin(before);
+				JOptionPane.showMessageDialog(null, "改变成功");
 			}
 		});
 		
 		} catch (Throwable e1) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "改变失败");
 			e1.printStackTrace();
 		}
 

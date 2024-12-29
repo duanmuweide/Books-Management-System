@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -98,7 +99,7 @@ class Login extends JFrame {
 					}
 				} else {
 					// 如果登录失败，可以提示用户
-					System.out.println("用户名或密码错误！");
+					JOptionPane.showMessageDialog(null, "用户名或密码错误", "错误", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
