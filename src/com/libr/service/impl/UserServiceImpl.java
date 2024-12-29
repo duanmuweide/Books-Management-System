@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Book> serachBookByWriter(String bookWriterName) {
 		BookDao bd = new BookDaoImpl();
-		List<Book> books = bd.getOneByBookName(bookWriterName);
+		List<Book> books = bd.getOneByAuthor(bookWriterName);
 		if (books.isEmpty()) {
 			System.out.println("没有找到包含关键词 '" + bookWriterName + "' 的图书");
 			return Collections.emptyList();
